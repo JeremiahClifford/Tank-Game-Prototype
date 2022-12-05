@@ -12,6 +12,7 @@ let players = [];
 const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate));
 //players to test the board drawing functions
 let player1 = {
+    PlayerName: "Player 1",
     Position: {
         xCoordinate: 5,
         yCoordinate: 2
@@ -20,6 +21,7 @@ let player1 = {
 };
 players.push(player1);
 let player2 = {
+    PlayerName: "Player 2",
     Position: {
         xCoordinate: 5,
         yCoordinate: 4
@@ -28,6 +30,7 @@ let player2 = {
 };
 players.push(player2);
 let player3 = {
+    PlayerName: "Player 3",
     Position: {
         xCoordinate: 8,
         yCoordinate: 3
@@ -51,7 +54,23 @@ const GetMouseGridPosition = (canvas, event) => {
 const SelectGridSquare = (gridPosition) => {
     //TODO: Detect if a player is in that position and open the appropriate
     //context menu based on if it is their tank or another player's
+    //handles the context menu text which tells the player which grid square they have selected
+    const currentlySelectedDefaultString = "Currently Selected Grid Space: ";
+    const currentlySelectedMessage = document.getElementById('currently-selected-message');
+    //sets the context menu message to tell the player which grid square they have selected
+    currentlySelectedMessage.innerHTML = currentlySelectedDefaultString + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate;
     console.log("Grid Square (" + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate + ") Selected");
+    //handles the context menu text which tells the player which player if any is in the selected square
+    const currentlyOccupyingDefaultText = "This space is occupied by: ";
+    const currentlyOccupyingEmptyText = "This square in not occupied";
+    const currentlyOccupyingMessage = document.getElementById('currently-occupied-message');
+    //sets the message
+    currentlyOccupyingMessage.innerHTML = currentlyOccupyingEmptyText;
+    players.forEach((p) => {
+        if (p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate == gridPosition.yCoordinate) {
+            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + p.PlayerName;
+        }
+    });
 };
 //adds an event listener to test the functionaily by outputing the position to the console
 canvas.addEventListener("mousedown", function (e) {
