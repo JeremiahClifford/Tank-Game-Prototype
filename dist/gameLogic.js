@@ -29,7 +29,7 @@ let player2 = {
 players.push(player2);
 let player3 = {
     Position: {
-        xCoordinate: 7,
+        xCoordinate: 8,
         yCoordinate: 3
     },
     Points: 0
@@ -60,4 +60,5 @@ const drawBoard = () => {
     console.log("Board Drawn");
 };
 drawBoard();
+console.log(CheckRangeBetweenTanks(player1, player3));
 //# sourceMappingURL=gameLogic.js.map

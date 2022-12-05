@@ -30,7 +30,7 @@ let player2: Tank = {
 players.push(player2)
 let player3: Tank = {
     Position: {
-        xCoordinate: 7,
+        xCoordinate: 8,
         yCoordinate: 3
     },
     Points: 0
@@ -67,3 +67,5 @@ const drawBoard = (): void => {
 }
 
 drawBoard()
+
+console.log(CheckRangeBetweenTanks(player1, player3))
