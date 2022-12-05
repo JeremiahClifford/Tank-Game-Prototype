@@ -1,5 +1,7 @@
+import { CoordinatePoint } from "./CoordinatePoint"
+
 type Tank = {
-    Position: number[],
+    Position: CoordinatePoint,
     Points: number
 }
 
