@@ -24,7 +24,7 @@
         let AttemptLogin = () => {
             let gameKeyInputted = document.getElementById('gamekeyinput').value
             if (gameKeyInputted ==gameKey) {
-                window.open('game.html', '_blank')
+                window.open('game.html', '_self')
             } else {
                 console.log("Login Failed: Incorrect Game Key")
             }

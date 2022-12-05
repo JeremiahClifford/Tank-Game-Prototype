@@ -1,3 +1,4 @@
+import { CoordinatePoint } from "./CoordinatePoint";
 import { Tank } from "./tank"
 
 //section for handling the players
@@ -42,6 +43,28 @@ players.push(player3)
 const canvas: HTMLCanvasElement = document.getElementById('viewport') as HTMLCanvasElement
 const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D
 
+//function to detect which space the player licks on
+const GetMouseGridPosition = (canvas: HTMLCanvasElement, event: any): CoordinatePoint => {
+    let canvasBounds = canvas.getBoundingClientRect();
+
+    return {
+        xCoordinate: Math.ceil((event.clientX - canvasBounds.left) / boardSquareSize),
+        yCoordinate: Math.ceil((event.clientY - canvasBounds.top) / boardSquareSize)
+    }
+}
+//function to select a grid square
+const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
+    //TODO: Detect if a player is in that position and open the appropriate
+    //context menu based on if it is their tank or another player's
+
+    console.log("Grid Square (" + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate + ") Selected");
+}
+//adds an event listener to test the functionaily by outputing the position to the console
+canvas.addEventListener("mousedown", function(e) {
+    const gridPosition: CoordinatePoint = GetMouseGridPosition(canvas, e)
+    SelectGridSquare(gridPosition)
+})
+
 //function to draw the board onto the canvas
 const drawBoard = (): void => {
 
@@ -67,5 +90,3 @@ const drawBoard = (): void => {
 }
 
 drawBoard()
-
-console.log(CheckRangeBetweenTanks(player1, player3))

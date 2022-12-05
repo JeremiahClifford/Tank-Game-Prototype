@@ -39,6 +39,25 @@ players.push(player3);
 //Objects for the canvas
 const canvas = document.getElementById('viewport');
 const context = canvas.getContext('2d');
+//function to detect which space the player licks on
+const GetMouseGridPosition = (canvas, event) => {
+    let canvasBounds = canvas.getBoundingClientRect();
+    return {
+        xCoordinate: Math.ceil((event.clientX - canvasBounds.left) / boardSquareSize),
+        yCoordinate: Math.ceil((event.clientY - canvasBounds.top) / boardSquareSize)
+    };
+};
+//function to select a grid square
+const SelectGridSquare = (gridPosition) => {
+    //TODO: Detect if a player is in that position and open the appropriate
+    //context menu based on if it is their tank or another player's
+    console.log("Grid Square (" + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate + ") Selected");
+};
+//adds an event listener to test the functionaily by outputing the position to the console
+canvas.addEventListener("mousedown", function (e) {
+    const gridPosition = GetMouseGridPosition(canvas, e);
+    SelectGridSquare(gridPosition);
+});
 //function to draw the board onto the canvas
 const drawBoard = () => {
     //dras a black background to be the lines between the spaces
@@ -60,5 +79,4 @@ const drawBoard = () => {
     console.log("Board Drawn");
 };
 drawBoard();
-console.log(CheckRangeBetweenTanks(player1, player3));
 //# sourceMappingURL=gameLogic.js.map
