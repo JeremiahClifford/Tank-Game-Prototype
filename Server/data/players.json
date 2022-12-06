@@ -1,5 +1,5 @@
 {
-    "player1": {
+    "p1": {
         "PlayerName": "Player 1",
         "Position": {
             "xCoordinate": 5,
@@ -8,7 +8,7 @@
         "Health": 3,
         "Points": 0
     },
-    "player2": {
+    "2": {
         "PlayerName": "Player 2",
         "Position": {
             "xCoordinate": 5,
@@ -17,7 +17,7 @@
         "Health": 3,
         "Points": 0
     },
-    "player3": {
+    "3": {
         "PlayerName": "Player 3",
         "Position": {
             "xCoordinate": 8,
