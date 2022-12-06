@@ -17,6 +17,7 @@ let player1 = {
         xCoordinate: 5,
         yCoordinate: 2
     },
+    Health: 3,
     Points: 0
 };
 players.push(player1);
@@ -26,6 +27,7 @@ let player2 = {
         xCoordinate: 5,
         yCoordinate: 4
     },
+    Health: 3,
     Points: 0
 };
 players.push(player2);
@@ -35,6 +37,7 @@ let player3 = {
         xCoordinate: 8,
         yCoordinate: 3
     },
+    Health: 3,
     Points: 0
 };
 players.push(player3);
@@ -98,5 +101,4 @@ const drawBoard = () => {
     console.log("Board Drawn");
 };
 drawBoard();
-console.log("Testing");
 //# sourceMappingURL=gameLogic.js.map

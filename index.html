@@ -11,23 +11,11 @@
     <body>
         <h2>Username:</h2>
         <input type="text" id="usernameinout">
-        <h2>Password:</h2>
-        <input type="text" id="passwordinput">
         <h2>Game Key:</h2>
         <input type="text" id="gamekeyinput">
         <br>
         <br>
         <button type="button" onclick="AttemptLogin()">Join Game</button>
     </body>
-    <script type="text/javascript">
-        const gameKey = 00001
-        let AttemptLogin = () => {
-            let gameKeyInputted = document.getElementById('gamekeyinput').value
-            if (gameKeyInputted ==gameKey) {
-                window.open('game.html', '_self')
-            } else {
-                console.log("Login Failed: Incorrect Game Key")
-            }
-        }
-    </script>
+    <script src = "dist/login.js"></script>
 </html>

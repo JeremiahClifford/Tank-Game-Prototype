@@ -1,11 +1,13 @@
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
-const port = 3000
+let settings = require('./data/settings.json')
+let playerList = require('./data/players.json')
 
-app.get("/", (request, response) => {
-    response.send("Hi there");
-});
+//test function to test running functions from the client to get data
+const TestFunction = () => {
+    return "Data sent and received"
+}
 
 //game manager page to manage the game settings
 //html setup
@@ -27,9 +29,9 @@ const ManagerHTML = () => {
 }
 //page setup
 app.get("/manager", (request, response) => {
-    response.send(ManagerHTML());
+    response.send(ManagerHTML())
 });
 
-app.listen(port, () => {
-    console.log("Listen on the port 3000...");
+app.listen(settings.Port, () => {
+    console.log("Listen on the port " + settings.Port + "...")
 });

@@ -19,6 +19,7 @@ let player1: Tank = {
         xCoordinate: 5,
         yCoordinate: 2
     },
+    Health: 3,
     Points: 0
 }
 players.push(player1)
@@ -28,6 +29,7 @@ let player2: Tank = {
         xCoordinate: 5,
         yCoordinate: 4
     },
+    Health: 3,
     Points: 0
 }
 players.push(player2)
@@ -37,6 +39,7 @@ let player3: Tank = {
         xCoordinate: 8,
         yCoordinate: 3
     },
+    Health: 3,
     Points: 0
 }
 players.push(player3)

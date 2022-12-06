@@ -1,0 +1,29 @@
+{
+    "player1": {
+        "PlayerName": "Player 1",
+        "Position": {
+            "xCoordinate": 5,
+            "yCoordinate": 2
+        },
+        "Health": 3,
+        "Points": 0
+    },
+    "player2": {
+        "PlayerName": "Player 2",
+        "Position": {
+            "xCoordinate": 5,
+            "yCoordinate": 4
+        },
+        "Health": 3,
+        "Points": 0
+    },
+    "player3": {
+        "PlayerName": "Player 3",
+        "Position": {
+            "xCoordinate": 8,
+            "yCoordinate": 4
+        },
+        "Health": 3,
+        "Points": 0
+    }
+}
