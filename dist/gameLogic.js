@@ -98,4 +98,5 @@ const drawBoard = () => {
     console.log("Board Drawn");
 };
 drawBoard();
+console.log("Testing");
 //# sourceMappingURL=gameLogic.js.map
