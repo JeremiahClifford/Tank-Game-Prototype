@@ -9,8 +9,8 @@ app.get("/", (request, response) => {
 
 //game manager page to manage the game settings
 //html setup
-let managerHTML = ""
-const assignManagerHTML = () => {
+const ManagerHTML = () => {
+    let managerHTML = ""
     managerHTML += "<!DOCTYPE html>"
     managerHTML += "<html lang='en'>"
     managerHTML +=     "<head>"
@@ -23,11 +23,11 @@ const assignManagerHTML = () => {
     managerHTML +=         "<h2>Game Manager</h2>"
     managerHTML +=     "</body>"
     managerHTML += "</html>"
+    return managerHTML
 }
-assignManagerHTML();
 //page setup
 app.get("/manager", (request, response) => {
-    response.send(managerHTML);
+    response.send(ManagerHTML());
 });
 
 app.listen(port, () => {
