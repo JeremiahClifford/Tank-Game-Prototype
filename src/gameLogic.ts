@@ -112,5 +112,3 @@ const drawBoard = (): void => {
 }
 
 drawBoard()
-
-console.log("Testing")
