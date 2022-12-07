@@ -21,6 +21,10 @@ app.get("/settings", (request, response) => {
     response.json(settings)
 })
 
+app.get("/players", (request, response) => {
+    response.json(playerList)
+})
+
 //game manager page to manage the game settings
 //html setup
 const ManagerHTML = () => {
