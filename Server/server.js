@@ -10,7 +10,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
-    });
+});
 
 app.get("/", (request, response) => {
     response.send("Server Page")
