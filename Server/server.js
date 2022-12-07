@@ -4,13 +4,21 @@ const app = express()
 let settings = require('./data/settings.json')
 let playerList = require('./data/players.json')
 
-//test function to test running functions from the client to get data
-const TestFunction = () => {
-    return "Data sent and received"
-}
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+    });
 
 app.get("/", (request, response) => {
     response.send("Server Page")
+})
+
+//responses for requests for data from the client
+app.get("/settings", (request, response) => {
+    response.json(settings)
 })
 
 //game manager page to manage the game settings

@@ -1,4 +1,9 @@
-const gameKey: string = "00001"
+let gameKey: string = "00000"
+
+fetch("http://localhost:3000/settings", {method: "GET"})
+   .then(res => res.json())
+   .then((settings) => gameKey = settings.GameKey)
+   .then(() => console.log(gameKey))
 
 const AttemptLogin = () => {
     const gameKeyInputField: HTMLInputElement = document.getElementById('gamekeyinput') as HTMLInputElement
