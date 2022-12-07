@@ -12,38 +12,6 @@ let players: Tank[] = [];
 //range to shoot
 const CheckRangeBetweenTanks = (tankA: Tank, tankB: Tank): number => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate))
 
-//players to test the board drawing functions
-let player1: Tank = {
-    PlayerName: "Player 1",
-    Position: {
-        xCoordinate: 5,
-        yCoordinate: 2
-    },
-    Health: 3,
-    Points: 0
-}
-players.push(player1)
-let player2: Tank = {
-    PlayerName: "Player 2",
-    Position: {
-        xCoordinate: 5,
-        yCoordinate: 4
-    },
-    Health: 3,
-    Points: 0
-}
-players.push(player2)
-let player3: Tank = {
-    PlayerName: "Player 3",
-    Position: {
-        xCoordinate: 8,
-        yCoordinate: 3
-    },
-    Health: 3,
-    Points: 0
-}
-players.push(player3)
-
 //Section for drawing to the canvas
 //Objects for the canvas
 const canvas: HTMLCanvasElement = document.getElementById('viewport') as HTMLCanvasElement
@@ -114,4 +82,22 @@ const drawBoard = (): void => {
     console.log("Board Drawn")
 }
 
-drawBoard()
+//variables for handling the importing of the player list
+let playerListImport: any
+
+//get the list of players from the server and draws the board when the site loads
+fetch("http://localhost:3000/players", {method: "GET"})
+   .then(res => res.json())
+   //.then((players) => playerListImport = JSON.parse(players))
+   .then((players) => playerListImport = players)
+   .then(() => console.log(playerListImport))
+   .then(() => {
+        let i = 1
+        while (playerListImport[i] != undefined) {
+            players.push(playerListImport[i] as Tank)
+            i++
+        }
+        console.log(players)
+   })
+   .then(drawBoard)
+   .catch(() => console.log("Error loading data from server"))

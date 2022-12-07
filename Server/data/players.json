@@ -21,7 +21,7 @@
         "PlayerName": "Player 3",
         "Position": {
             "xCoordinate": 8,
-            "yCoordinate": 4
+            "yCoordinate": 3
         },
         "Health": 3,
         "Points": 0

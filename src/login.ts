@@ -9,7 +9,7 @@ fetch("http://localhost:3000/settings", {method: "GET"})
    .then(() => console.log(gameKey))
    .catch(() => console.log("Server not responding"))
 
-   //get the list of players from the server
+//get the list of players from the server
 fetch("http://localhost:3000/players", {method: "GET"})
    .then(res => res.json())
    //.then((players) => playerListImport = JSON.parse(players))
