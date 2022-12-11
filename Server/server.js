@@ -1,16 +1,28 @@
 const express = require("express")
+const bodyParser = require('body-parser')
 const app = express()
 
 let settings = require('./data/settings.json')
 let playerList = require('./data/players.json')
+let responseFile = require('./data/responseFile.json')
+
+let playerListArray = []
+let i = 1
+while (playerList[i] != undefined) {
+    playerListArray.push(playerList[i])
+    i++
+}
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
 
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    next()
+})
 
 app.get("/", (request, response) => {
     response.send("Server Page")
@@ -19,6 +31,17 @@ app.get("/", (request, response) => {
 //responses for requests for data from the client
 app.get("/settings", (request, response) => {
     response.json(settings)
+})
+
+app.post("/login", bodyParser.json(), (request, response) => {
+    const loginSubmitted = request.body
+    
+    responseFile.responseValue = (
+        (playerListArray.filter((p) => p.PlayerName === loginSubmitted.username))
+            .length === 1
+         && (loginSubmitted.gameKey == settings.GameKey)
+    )
+    response.json(responseFile)
 })
 
 app.get("/players", (request, response) => {
@@ -40,6 +63,7 @@ const ManagerHTML = () => {
     managerHTML +=     "<body>"
     managerHTML +=         "<h2>Game Manager</h2>"
     managerHTML +=         "<h3>Port: " + settings.Port + "</h3>"
+    managerHTML +=         "<h3>game Key: " + settings.GameKey + "</h3>"
     managerHTML +=     "</body>"
     managerHTML += "</html>"
     return managerHTML
