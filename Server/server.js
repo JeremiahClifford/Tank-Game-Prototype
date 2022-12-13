@@ -35,11 +35,12 @@ app.get("/settings", (request, response) => {
 
 app.post("/login", bodyParser.json(), (request, response) => {
     const loginSubmitted = request.body
-    
+
     responseFile.responseValue = (
         (playerListArray.filter((p) => p.PlayerName === loginSubmitted.username))
             .length === 1
-         && (loginSubmitted.gameKey == settings.GameKey)
+         && (loginSubmitted.gameKey == settings.GameKey) 
+         && (loginSubmitted.password === (playerListArray.filter((p) => p.PlayerName === loginSubmitted.username)[0].Password))
     )
     response.json(responseFile)
 })

@@ -5,12 +5,18 @@ const AttemptLogin = () => {
     //username
     const usernameInputField = document.getElementById('usernameinput');
     const usernameInputted = usernameInputField.value;
+    //password
+    const passwordInputField = document.getElementById('passwordinput');
+    const passwordInputted = passwordInputField.value;
     //gameKey
     const gameKeyInputField = document.getElementById('gamekeyinput');
     const gameKeyInputted = gameKeyInputField.value;
+    //port
+    const portInputField = document.getElementById('portinput');
+    const portInputted = portInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch("http://localhost:3000/login", {
+    fetch("http://localhost:" + portInputted + "/login", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -18,12 +24,12 @@ const AttemptLogin = () => {
         },
         body: JSON.stringify({
             "username": usernameInputted,
+            "password": passwordInputted,
             "gameKey": gameKeyInputted
         })
     })
         .then((response) => response.json())
         .then((responseFile) => loginSucceeded = responseFile.responseValue)
-        .then(() => console.log(loginSucceeded))
         .then(() => {
         if (loginSucceeded) {
             window.open('game.html', '_self');

@@ -56,18 +56,34 @@ const drawBoard = () => {
     context.fillStyle = "black";
     //draws the background
     context.fillRect(0, 0, canvas.width, canvas.height);
-    //draws the various board squares
+    //draws the grid of board squares
     for (let i = 0; i < canvas.width / 50; i++) {
         for (let j = 0; j < canvas.height / 50; j++) {
             context.clearRect(i * boardSquareSize + 1, j * boardSquareSize + 1, boardSquareSize - 2, boardSquareSize - 2);
         }
     }
     //draws all of the players in the game
-    //sets the color of the players
-    context.fillStyle = "black";
     //loops through the list of players and draws them at their position
-    players.forEach((p) => context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), playerSize, playerSize));
-    console.log("Board Drawn");
+    players.forEach((p) => {
+        //sets the color of the players
+        context.fillStyle = "black";
+        context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), playerSize, playerSize);
+        //draws a pip for each health point the player has
+        //sets the color of the pips
+        context.fillStyle = "Red";
+        //draws the pip for 1 health
+        if (p.Health >= 1) {
+            context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+        }
+        //draws the pip for 2 health
+        if (p.Health >= 2) {
+            context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + ((playerSize / 2) - 5), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+        }
+        //draws the pip for 3 health
+        if (p.Health >= 3) {
+            context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+        }
+    });
 };
 //variables for handling the importing of the player list
 let playerListImport;
@@ -76,14 +92,12 @@ fetch("http://localhost:3000/players", { method: "GET" })
     .then(res => res.json())
     //.then((players) => playerListImport = JSON.parse(players))
     .then((players) => playerListImport = players)
-    .then(() => console.log(playerListImport))
     .then(() => {
     let i = 1;
     while (playerListImport[i] != undefined) {
         players.push(playerListImport[i]);
         i++;
     }
-    console.log(players);
 })
     .then(drawBoard)
     .catch(() => console.log("Error loading data from server"));
