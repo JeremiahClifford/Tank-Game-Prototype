@@ -1,11 +1,14 @@
+//express server setup
 const express = require("express")
 const bodyParser = require('body-parser')
 const app = express()
 
+//data from the json files
 let settings = require('./data/settings.json')
 let playerList = require('./data/players.json')
 let responseFile = require('./data/responseFile.json')
 
+//array for of the list of players
 let playerListArray = []
 let i = 1
 while (playerList[i] != undefined) {
@@ -13,9 +16,9 @@ while (playerList[i] != undefined) {
     i++
 }
 
+//settings to make data parsing and connecting work
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
-
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
@@ -24,6 +27,7 @@ app.use(function (req, res, next) {
     next()
 })
 
+//default page
 app.get("/", (request, response) => {
     response.send("Server Page")
 })
@@ -33,6 +37,8 @@ app.get("/settings", (request, response) => {
     response.json(settings)
 })
 
+//login function
+//user submits data, server valifdates, and sends back if they are valid or not
 app.post("/login", bodyParser.json(), (request, response) => {
     const loginSubmitted = request.body
 
@@ -45,8 +51,9 @@ app.post("/login", bodyParser.json(), (request, response) => {
     response.json(responseFile)
 })
 
+//sends the list of players to the client
 app.get("/players", (request, response) => {
-    response.json(playerList)
+    response.json(play)
 })
 
 //game manager page to manage the game settings
@@ -74,6 +81,7 @@ app.get("/manager", (request, response) => {
     response.send(ManagerHTML())
 })
 
+//opens the server on the specified port
 app.listen(settings.Port, () => {
     console.log("Listen on the port " + settings.Port + "...")
 })
