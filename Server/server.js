@@ -53,7 +53,7 @@ app.post("/login", bodyParser.json(), (request, response) => {
 
 //sends the list of players to the client
 app.get("/players", (request, response) => {
-    response.json(play)
+    response.json(playerList)
 })
 
 //game manager page to manage the game settings

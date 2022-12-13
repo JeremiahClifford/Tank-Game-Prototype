@@ -1,3 +1,6 @@
+//gets the local storage to store login information
+const playerStorage: Storage = window.sessionStorage
+
 //checks the player's login credentials before letting them enter the game
 const AttemptLogin = () => {
 
@@ -33,6 +36,7 @@ const AttemptLogin = () => {
         .then((responseFile) => loginSucceeded = responseFile.responseValue)
         .then(() => {
             if (loginSucceeded) {
+                playerStorage.setItem("Username", usernameInputted)
                 window.open('game.html', '_self')
             } else {
                 console.log("Login Failed: Incorrect Login")

@@ -1,6 +1,9 @@
 import { CoordinatePoint } from "./CoordinatePoint";
 import { Tank } from "./tank"
 
+//gets the local storage to store login information
+const playerStorage: Storage = window.sessionStorage
+
 //section for handling the players
 //defines the size of a player on the screen to be used when calculating player position and board grid size
 const playerSize: number = 40
@@ -48,7 +51,12 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
     currentlyOccupyingMessage.innerHTML = currentlyOccupyingEmptyText
     players.forEach((p): void => {
         if (p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate == gridPosition.yCoordinate) {
-            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + p.PlayerName
+            if (p.PlayerName === playerStorage.getItem("Username")) {
+                currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "you"
+            } else {
+                currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + p.PlayerName
+                //TODO: add button to send points
+            }
         }
     })
 }
@@ -93,6 +101,13 @@ const drawBoard = (): void => {
         //draws the pip for 3 health
         if (p.Health >= 3) {
             context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize-playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate-1) * boardSquareSize) + (playerSize - 10), 10, 10)
+        }
+
+        //fills in  the player info for the player
+        const availablePointsDefaultText: string = "Available Action Points: "
+        if (p.PlayerName == playerStorage.getItem("Username")) {
+            const availablePointsDisplay: HTMLElement = document.getElementById("points") as HTMLElement
+            availablePointsDisplay.innerHTML = availablePointsDefaultText + p.Points
         }
     })
 }
