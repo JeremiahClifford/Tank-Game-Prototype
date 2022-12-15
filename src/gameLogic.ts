@@ -4,6 +4,11 @@ import { Tank } from "./tank"
 //gets the local storage to store login information
 const playerStorage: Storage = window.sessionStorage
 
+//target server
+const server: string = "http://localhost:"
+//target port
+const port: string = playerStorage.getItem("Port") as string
+
 //section for handling the players
 //defines the size of a player on the screen to be used when calculating player position and board grid size
 const playerSize: number = 40
@@ -86,6 +91,10 @@ const drawBoard = (): void => {
     players.forEach((p) => {
         //sets the color of the players
         context.fillStyle = "black"
+        //if it is drawing the player, set it to blue
+        if (p.PlayerName === playerStorage.getItem("Username")) {
+            context.fillStyle = "blue"
+        }
         context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize-playerSize) / 2), ((p.Position.yCoordinate-1) * boardSquareSize) + ((boardSquareSize-playerSize) / 2),  playerSize, playerSize)
         //draws a pip for each health point the player has
         //sets the color of the pips
@@ -115,7 +124,7 @@ const drawBoard = (): void => {
 //variables for handling the importing of the player list
 let playerListImport: any
 //get the list of players from the server and draws the board when the site loads
-fetch("http://localhost:3000/players", {method: "GET"})
+fetch(server + port + "/players", {method: "GET"})
    .then(res => res.json())
    //.then((players) => playerListImport = JSON.parse(players))
    .then((players) => playerListImport = players)

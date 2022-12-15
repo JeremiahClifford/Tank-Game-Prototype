@@ -1,6 +1,9 @@
 //gets the local storage to store login information
 const playerStorage: Storage = window.sessionStorage
 
+//target server
+const server:string = "http://localhost:"
+
 //checks the player's login credentials before letting them enter the game
 const AttemptLogin = () => {
 
@@ -20,7 +23,7 @@ const AttemptLogin = () => {
 
     //get the response to the login check
     let loginSucceeded: boolean = false
-    fetch("http://localhost:" + portInputted + "/login", {
+    fetch(server + portInputted + "/login", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -37,6 +40,7 @@ const AttemptLogin = () => {
         .then(() => {
             if (loginSucceeded) {
                 playerStorage.setItem("Username", usernameInputted)
+                playerStorage.setItem("Port", portInputted)
                 window.open('game.html', '_self')
             } else {
                 console.log("Login Failed: Incorrect Login")

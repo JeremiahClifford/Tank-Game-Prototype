@@ -1,6 +1,8 @@
 "use strict";
 //gets the local storage to store login information
 const playerStorage = window.sessionStorage;
+//target server
+const server = "http://localhost:";
 //checks the player's login credentials before letting them enter the game
 const AttemptLogin = () => {
     //gets the inputted values
@@ -18,7 +20,7 @@ const AttemptLogin = () => {
     const portInputted = portInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch("http://localhost:" + portInputted + "/login", {
+    fetch(server + portInputted + "/login", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -35,6 +37,7 @@ const AttemptLogin = () => {
         .then(() => {
         if (loginSucceeded) {
             playerStorage.setItem("Username", usernameInputted);
+            playerStorage.setItem("Port", portInputted);
             window.open('game.html', '_self');
         }
         else {
