@@ -35,6 +35,9 @@ const GetMouseGridPosition = (canvas, event) => {
 };
 //function to select a grid square
 const SelectGridSquare = (gridPosition) => {
+    //resets the button zone so that buttons dont stack up
+    const buttonZone = document.getElementById("button-zone");
+    buttonZone.innerHTML = ``;
     //handles if the player is clicking on a space to try to move to it
     if (moving) {
         //TODO: check if the selected square can be moved to and, if so, move to it, and if not, select as normal
@@ -54,8 +57,6 @@ const SelectGridSquare = (gridPosition) => {
     currentlyOccupyingMessage.innerHTML = currentlyOccupyingEmptyText;
     players.forEach((p) => {
         if (p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate == gridPosition.yCoordinate) {
-            const buttonZone = document.getElementById("button-zone");
-            buttonZone.innerHTML = ``;
             if (p.PlayerName === playerStorage.getItem("Username")) {
                 currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "you";
                 buttonZone.innerHTML += `<button id="move-button" onclick="initiateMove()">Move</button>`;
