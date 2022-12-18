@@ -65,6 +65,9 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
                     "destination": gridPosition
                 })
             })
+            .then((response) => response.json())
+            .then((responseFile) => console.log(responseFile.responseValue))
+            .catch(() => console.log("Server not responding"))
             
             console.log("Can move there \nMoving not yet implemented")
         } else {
@@ -101,7 +104,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
         } else { //if it is not the logged in player it must be a different player
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + filteredPlayers[0].PlayerName
-            buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint()">Send Action Point</button>`
+            buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint(${filteredPlayers[0].PlayerName})">Send Action Point</button>`
         }
     }
     //console log for debugging which shows the selected space and who is in it
@@ -145,9 +148,10 @@ const initiateMove = (): void => {
     }
 }
 
-const SendActionPoint =  (): void => {
-    //TODO: make it send an action point to the selected player 
-    console.log("Function not yet implemented")
+const SendActionPoint =  (reciever: string): void => {
+    //TODO: make it send an action point to the selected player
+    console.log(`Sending 1 action point to ${reciever}`)
+    console.log(`Function not yet implemented`)
 }
 
 //function to draw the board onto the canvas

@@ -3,6 +3,8 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const app = express()
 
+const fs = require("fs")
+
 //data from the json files
 let settings = require('./data/settings.json')
 let playerList = require('./data/players.json')
@@ -58,17 +60,50 @@ app.post("/move", bodyParser.json(), (request, response) => {
     //ingests the data
     const moveSubmitted = request.body
 
-    //Temp: logs the info submitted
-    console.log(moveSubmitted.username)
-    console.log(moveSubmitted.destination)
+    //gets the player that is trying to make the move
+    const movingPlayer = playerListArray.filter((p) => p.PlayerName === moveSubmitted.username)[0]
 
     //checks that the move is allowed, if so execute the move in the data
-    //TODO
-
-    //if move is allowed sets response to true, if not sets it to false
-    //TODO
-    //Temp: just sends back false
-    responseFile.responseValue = true
+    if (
+        movingPlayer.Points > 0 &&
+        moveSubmitted.destination.xCoordinate > 0 &&
+        moveSubmitted.destination.xCoordinate < 38 &&
+        moveSubmitted.destination.yCoordinate > 0 &&
+        moveSubmitted.destination.yCoordinate < 18 &&
+        Math.abs(moveSubmitted.destination.xCoordinate - movingPlayer.Position.xCoordinate) <= 1 &&
+        Math.abs(moveSubmitted.destination.yCoordinate - movingPlayer.Position.yCoordinate) <= 1 &&
+        playerListArray.filter((p) => p.Position.xCoordinate === moveSubmitted.destination.xCoordinate && p.Position.yCoordinate === moveSubmitted.destination.yCoordinate).length === 0
+    ) {
+        //TODO: make the move happen in the data and write it to the players.json
+        /*playerListArray.forEach((p) => {
+            if (p.PlayerName === movingPlayer.PlayerName) {
+                p.Position = {
+                    xCoordinate: moveSubmitted.destination.xCoordinate,
+                    yCoordinate: moveSubmitted.destination.yCoordinate
+                }
+            }
+        })
+        console.log(playerListArray)
+        console.log(playerList)
+        playerList = {}
+        for (let i = 1; i < playerListArray.length + 1; i++) {
+            playerList.push(`${i}: {
+                "PlayerName": ${playerListArray[i-1].PlayerName},
+                "Password": ${playerListArray[i-1].Password},
+                "Position": {
+                    "xCoordinate": ${playerListArray[i-1].Position.xCoordinate},
+                    "yCoordinate": ${playerListArray[i-1].Position.yCoordinate}
+                },
+                "Health": ${playerListArray[i-1].Health},
+                "Points": ${playerListArray[i-1].Points}
+            },`)
+        }
+        fs.writeFile("data/test.json", JSON.stringify(playerList))*/
+        
+        responseFile.responseValue = true
+    } else {
+        responseFile.responseValue = false
+    }
 
     //sends a response to the client
     response.json(responseFile)
