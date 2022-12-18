@@ -51,6 +51,29 @@ app.post("/login", bodyParser.json(), (request, response) => {
     response.json(responseFile)
 })
 
+//move function
+//client submits move action, server validates if allowed, executes move
+//client should refresh and reaquire the data from the server and thus nothing should need to be sent back
+app.post("/move", bodyParser.json(), (request, response) => {
+    //ingests the data
+    const moveSubmitted = request.body
+
+    //Temp: logs the info submitted
+    console.log(moveSubmitted.username)
+    console.log(moveSubmitted.destination)
+
+    //checks that the move is allowed, if so execute the move in the data
+    //TODO
+
+    //if move is allowed sets response to true, if not sets it to false
+    //TODO
+    //Temp: just sends back false
+    responseFile.responseValue = true
+
+    //sends a response to the client
+    response.json(responseFile)
+})
+
 //sends the list of players to the client
 app.get("/players", (request, response) => {
     response.json(playerList)
@@ -59,21 +82,22 @@ app.get("/players", (request, response) => {
 //game manager page to manage the game settings
 //html setup
 const ManagerHTML = () => {
-    let managerHTML = ""
-    managerHTML += "<!DOCTYPE html>"
-    managerHTML += "<html lang='en'>"
-    managerHTML +=     "<head>"
-    managerHTML +=         "<meta charset='UTF-8'>"
-    managerHTML +=         "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
-    managerHTML +=         "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
-    managerHTML +=         "<title>Game Manager</title>"
-    managerHTML +=     "</head>"
-    managerHTML +=     "<body>"
-    managerHTML +=         "<h2>Game Manager</h2>"
-    managerHTML +=         "<h3>Port: " + settings.Port + "</h3>"
-    managerHTML +=         "<h3>game Key: " + settings.GameKey + "</h3>"
-    managerHTML +=     "</body>"
-    managerHTML += "</html>"
+    let managerHTML = `
+        <!DOCTYPE html>
+        <html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                <title>Game Manager</title>
+            </head>
+            <body>
+                <h2>Game Manager</h2>
+                <h3>Port: ${settings.Port}</h3>
+                <h3>Game Key: ${settings.GameKey}</h3>
+            </body>
+        </html>
+    `
     return managerHTML
 }
 //page setup

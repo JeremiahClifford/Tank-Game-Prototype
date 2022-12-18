@@ -54,6 +54,17 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
         //checks if the player can move to the selected coordinate by filtering the list of movableSpaces to any that match the selected space
         if (movableSpaces.filter((c) => c.xCoordinate == gridPosition.xCoordinate && c.yCoordinate == gridPosition.yCoordinate).length == 1) {
             //TODO: send a movement order to the server to move the player
+            fetch(server + port + "/move", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": playerStorage.getItem("Username"),
+                    "destination": gridPosition
+                })
+            })
             
             console.log("Can move there \nMoving not yet implemented")
         } else {
