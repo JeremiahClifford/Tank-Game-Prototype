@@ -58,6 +58,7 @@ const SelectGridSquare = (gridPosition) => {
             })
                 .then((response) => response.json())
                 .then((responseFile) => console.log(responseFile.responseValue))
+                .then(() => drawBoard())
                 .catch(() => console.log("Server not responding"));
             console.log("Can move there \nMoving not yet implemented");
         }
@@ -86,12 +87,18 @@ const SelectGridSquare = (gridPosition) => {
         if (filteredPlayers[0].PlayerName == playerStorage.getItem("Username")) {
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "you";
-            buttonZone.innerHTML += `<button id="move-button" onclick="initiateMove()">Move</button>`;
+            //gives the player the move button if they have enough action points
+            if (filteredPlayers[0].Points > 0) {
+                buttonZone.innerHTML += `<button id="move-button" onclick="initiateMove()">Move</button>`;
+            }
         }
         else { //if it is not the logged in player it must be a different player
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + filteredPlayers[0].PlayerName;
-            buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint(${filteredPlayers[0].PlayerName})">Send Action Point</button>`;
+            //gives the player the move button if they have enough action points
+            if (players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0].Points > 0) {
+                buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint(${filteredPlayers[0].PlayerName})">Send Action Point</button>`;
+            }
         }
     }
     //console log for debugging which shows the selected space and who is in it

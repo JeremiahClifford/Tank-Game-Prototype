@@ -74,32 +74,20 @@ app.post("/move", bodyParser.json(), (request, response) => {
         Math.abs(moveSubmitted.destination.yCoordinate - movingPlayer.Position.yCoordinate) <= 1 &&
         playerListArray.filter((p) => p.Position.xCoordinate === moveSubmitted.destination.xCoordinate && p.Position.yCoordinate === moveSubmitted.destination.yCoordinate).length === 0
     ) {
-        //TODO: make the move happen in the data and write it to the players.json
-        /*playerListArray.forEach((p) => {
+        playerListArray.forEach((p) => {
             if (p.PlayerName === movingPlayer.PlayerName) {
+                //puts the player in the destination space
                 p.Position = {
                     xCoordinate: moveSubmitted.destination.xCoordinate,
                     yCoordinate: moveSubmitted.destination.yCoordinate
                 }
+                //takes an action point from the player
+                p.Points -= 1
             }
         })
-        console.log(playerListArray)
-        console.log(playerList)
-        playerList = {}
-        for (let i = 1; i < playerListArray.length + 1; i++) {
-            playerList.push(`${i}: {
-                "PlayerName": ${playerListArray[i-1].PlayerName},
-                "Password": ${playerListArray[i-1].Password},
-                "Position": {
-                    "xCoordinate": ${playerListArray[i-1].Position.xCoordinate},
-                    "yCoordinate": ${playerListArray[i-1].Position.yCoordinate}
-                },
-                "Health": ${playerListArray[i-1].Health},
-                "Points": ${playerListArray[i-1].Points}
-            },`)
-        }
-        fs.writeFile("data/test.json", JSON.stringify(playerList))*/
-        
+        //TODO: make the data write to the json file
+        //fs.writeFile("data/test.json", JSON.stringify(playerList))
+
         responseFile.responseValue = true
     } else {
         responseFile.responseValue = false
