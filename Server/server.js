@@ -48,7 +48,7 @@ app.get("/players", (request, response) => {
 
 //login function
 //user submits data, server valifdates, and sends back if they are valid or not
-app.post("/login", bodyParser.json(), (request, response) => {
+app.post("/login", (request, response) => {
     const loginSubmitted = request.body
 
     responseFile.responseValue = (
@@ -63,7 +63,7 @@ app.post("/login", bodyParser.json(), (request, response) => {
 //move function
 //client submits move action, server validates if allowed, executes move
 //client should refresh and reaquire the data from the server and thus nothing should need to be sent back
-app.post("/move", bodyParser.json(), (request, response) => {
+app.post("/move", (request, response) => {
     //ingests the data
     const moveSubmitted = request.body
 
@@ -106,7 +106,7 @@ app.post("/move", bodyParser.json(), (request, response) => {
 
 //send action points function
 //sends 1 action point between 1 player and another
-app.post("/send", bodyParser.json(), (request, response) => {
+app.post("/send", (request, response) => {
 
     //ingests the data
     const moveSubmitted = request.body
