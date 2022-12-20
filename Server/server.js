@@ -3,7 +3,7 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const app = express()
 
-const fs = require("fs")
+const fs = require('fs')
 
 //data from the json files
 let settings = require('./data/settings.json')
@@ -104,8 +104,12 @@ app.post("/move", (request, response) => {
                 p.Points -= 1
             }
         })
-        //TODO: make the data write to the json file
-        //fs.writeFile("data/test.json", JSON.stringify(playerList))
+        if (settings.SaveOnAction) {
+            const data = JSON.stringify(playerList)
+            fs.writeFile("./Server/data/players.json", data, (err) => {
+                if (err) throw err
+            })
+        }
 
         responseFile.responseValue = true
     } else {
@@ -139,8 +143,12 @@ app.post("/shoot", (request, response) => {
         if (targetPlayer.Health === 0) {
             //TODO: remove the player if they die
         }
-        //TODO: make the data write to the json file
-        //fs.writeFile("data/test.json", JSON.stringify(playerList))
+        if (settings.SaveOnAction) {
+            const data = JSON.stringify(playerList)
+            fs.writeFile("./Server/data/players.json", data, (err) => {
+                if (err) throw err
+            })
+        }
 
         responseFile.responseValue = true
     } else {

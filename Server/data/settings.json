@@ -1,5 +1,6 @@
 {
     "Port": 4050,
     "GameKey": "00001",
-    "PointInterval": 24 //number of hours | can be decimals
+    "PointInterval": 24,
+    "SaveOnAction": false
 }
