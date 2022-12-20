@@ -23,6 +23,10 @@ let players = [];
 let moving = false;
 //list of spaces that the player can move to
 let movableSpaces = [];
+//bool to hold the status of if the player is currently trying to shoot
+let shooting = false;
+//list of other players that the player can shoot
+let shootablePlayers = [];
 //how far apart 2 tanks are for the purpose of checking if a tank is within
 //range to shoot
 const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate));
@@ -75,6 +79,12 @@ const SelectGridSquare = (gridPosition, event) => {
         }
         moving = false;
     }
+    //handles if the player is clicking on a space to try to shoot the person on it
+    if (shooting) {
+        //TODO: make shooting work
+        console.log("Shooting not yet implemented");
+        shooting = false;
+    }
     //handles the context menu text which tells the player which grid square they have selected
     contextMenu.innerHTML = `
         <h2 id="currently-selected-message">(0, 0)</h2>
@@ -104,6 +114,9 @@ const SelectGridSquare = (gridPosition, event) => {
                 `;
                 const buttonZone = document.getElementById("button-zone");
                 buttonZone.innerHTML += `<button id="move-button" onclick="initiateMove()">Move</button>`;
+                if (filteredPlayers[0].Points >= 0) {
+                    buttonZone.innerHTML += `<button id="shoot-button" onclick="initiateShoot()">Shoot</button>`;
+                }
             }
         }
         else { //if it is not the logged in player it must be a different player
@@ -177,6 +190,7 @@ const initiateMove = () => {
         }
     }
 };
+//function to send an action point to another player
 const SendActionPoint = (reciever) => {
     //TODO: make it send an action point to the selected player
     fetch(server + port + "/send", {
@@ -195,6 +209,21 @@ const SendActionPoint = (reciever) => {
         .then(() => drawBoard())
         .catch(() => console.log("Server not responding"));
     console.log(`Sending 1 action point to ${reciever}`);
+};
+//function to bring up indicators to allow the player to shoot
+const initiateShoot = () => {
+    HideContextMenu();
+    shooting = true;
+    shootablePlayers = [];
+    const currentPlayer = players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0];
+    players.forEach((p) => {
+        if (CheckRangeBetweenTanks(currentPlayer, p) <= 2 && p.PlayerName !== playerStorage.getItem("Username")) {
+            context.strokeStyle = "red";
+            context.lineWidth = 5;
+            context.strokeRect((p.Position.xCoordinate - 1) * boardSquareSize, (p.Position.yCoordinate - 1) * boardSquareSize, boardSquareSize, boardSquareSize);
+            context.lineWidth = 1;
+        }
+    });
 };
 //function to draw the board onto the canvas
 const drawBoard = () => {
