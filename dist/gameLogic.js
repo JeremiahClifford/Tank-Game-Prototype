@@ -65,6 +65,7 @@ const SelectGridSquare = (gridPosition, event) => {
             })
                 .then((response) => response.json())
                 .then((responseFile) => console.log(responseFile.responseValue))
+                .then(() => HideContextMenu())
                 .then(() => drawBoard())
                 .catch(() => console.log("Server not responding"));
             console.log("Can move there \nMoving not yet implemented");
@@ -148,6 +149,7 @@ canvas.addEventListener("mousedown", (e) => e.button === 0 ? SelectGridSquare(Ge
 document.body.addEventListener("mousedown", (e) => e.button === 0 ? null : HideContextMenu());
 //function to bring up the indicators to allow the player to move
 const initiateMove = () => {
+    HideContextMenu();
     moving = true;
     movableSpaces = [];
     const currentPlayer = players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0];

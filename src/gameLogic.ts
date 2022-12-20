@@ -76,6 +76,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
             })
             .then((response) => response.json())
             .then((responseFile) => console.log(responseFile.responseValue))
+            .then(() => HideContextMenu())
             .then(() => drawBoard())
             .catch(() => console.log("Server not responding"))
             
@@ -168,6 +169,7 @@ document.body.addEventListener("mousedown", (e) => e.button === 0 ? null : HideC
 
 //function to bring up the indicators to allow the player to move
 const initiateMove = (): void => {
+    HideContextMenu()
     moving = true
     movableSpaces = []
     const currentPlayer: Tank = players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0]
