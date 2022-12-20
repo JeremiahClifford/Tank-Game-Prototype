@@ -13,6 +13,9 @@ const playerSize = 40;
 const boardSquareSize = 50;
 //defines the size of the indicator marks
 const indicatorMarkSize = 30;
+//defines the max number of spaces on the x and y directions
+const xMax = 38;
+const yMax = 18;
 //holds a list of the players
 let players = [];
 //variables to hold the status of the client
@@ -29,6 +32,11 @@ const canvas = document.getElementById('viewport');
 const context = canvas.getContext('2d');
 //grabs the context menu from the document
 const contextMenu = document.getElementById("context-menu");
+//function to get the position of the mouse on the whole page
+const GetAbsoluteMousePosition = (body, event) => {
+    let bodyBounds = body.getBoundingClientRect();
+    return [event.clientX, event.clientY];
+};
 //function to detect which space the player licks on
 const GetMouseGridPosition = (canvas, event) => {
     let canvasBounds = canvas.getBoundingClientRect();
@@ -38,7 +46,7 @@ const GetMouseGridPosition = (canvas, event) => {
     };
 };
 //function to select a grid square
-const SelectGridSquare = (gridPosition) => {
+const SelectGridSquare = (gridPosition, event) => {
     //handles if the player is clicking on a space to try to move to it
     if (moving) {
         //checks if the player can move to the selected coordinate by filtering the list of movableSpaces to any that match the selected space
@@ -68,25 +76,23 @@ const SelectGridSquare = (gridPosition) => {
     }
     //handles the context menu text which tells the player which grid square they have selected
     contextMenu.innerHTML = `
-        <h2 id="currently-selected-message">Currently Selected Grid Space: none</h2>
+        <h2 id="currently-selected-message">(0, 0)</h2>
     `;
-    const currentlySelectedDefaultString = `Currently Selected Grid Space:`;
     const currentlySelectedMessage = document.getElementById('currently-selected-message');
     //sets the context menu message to tell the player which grid square they have selected
-    currentlySelectedMessage.innerHTML = `${currentlySelectedDefaultString} ${gridPosition.xCoordinate}, ${gridPosition.yCoordinate}`;
+    currentlySelectedMessage.innerHTML = `(${gridPosition.xCoordinate}, ${gridPosition.yCoordinate})`;
     //checks for players in the selected spaces by filtering the list of players
     let filteredPlayers = players.filter((p) => p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate === gridPosition.yCoordinate);
     if (filteredPlayers.length === 1) {
         //handles the context menu text which tells the player which player if any is in the selected square
-        contextMenu.innerHTML += `<h2 id="currently-occupied-message">This square in not occupied</h2>`;
-        const currentlyOccupyingDefaultText = `This space is occupied by: `;
+        contextMenu.innerHTML += `<h2 id="currently-occupied-message">No one</h2>`;
         const currentlyOccupyingMessage = document.getElementById('currently-occupied-message');
         //sets the message
-        currentlyOccupyingMessage.innerHTML = `${currentlyOccupyingDefaultText} ${filteredPlayers[0].PlayerName}`;
+        currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`;
         //if the name of the player in the space matches the logged in player
         if (filteredPlayers[0].PlayerName === playerStorage.getItem("Username")) {
             //fill in the context menu
-            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + `${filteredPlayers[0].PlayerName} (You)`;
+            currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName} (You)`;
             //gives the player the move button if they have enough action points
             if (filteredPlayers[0].Points > 0) {
                 //adds the button zone
@@ -101,7 +107,7 @@ const SelectGridSquare = (gridPosition) => {
         }
         else { //if it is not the logged in player it must be a different player
             //fill in the context menu
-            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + filteredPlayers[0].PlayerName;
+            currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`;
             //gives the player the move button if they have enough action points
             if (players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0].Points > 0) {
                 //adds the button zone
@@ -117,10 +123,29 @@ const SelectGridSquare = (gridPosition) => {
     }
     //console log for debugging which shows the selected space and who is in it
     console.log("Grid Square (" + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate + ") Selected \nCurrently occupied by " + (filteredPlayers.length === 1 ? filteredPlayers[0].PlayerName : "no one"));
+    ShowContextMenu(event);
     drawBoard();
 };
+//function to open the context menu
+const ShowContextMenu = (event) => {
+    let mousePos = GetAbsoluteMousePosition(document.body, event);
+    contextMenu.style.position = 'absolute';
+    contextMenu.style.top = `${mousePos[1]}px`;
+    contextMenu.style.left = `${mousePos[0]}px`;
+    contextMenu.style.border = `2px solid black`;
+    contextMenu.style.backgroundColor = `white`;
+    contextMenu.style.padding = `5px`;
+};
+//function to hide the context menu
+const HideContextMenu = () => {
+    contextMenu.innerHTML = ``;
+    contextMenu.style.border = `0px`;
+    contextMenu.style.padding = `0px`;
+};
 //adds an event listener to select the grid square
-canvas.addEventListener("mousedown", (e) => e.button === 0 ? SelectGridSquare(GetMouseGridPosition(canvas, e)) : contextMenu.innerHTML = ``);
+canvas.addEventListener("mousedown", (e) => e.button === 0 ? SelectGridSquare(GetMouseGridPosition(canvas, e), e) : HideContextMenu());
+//lets the player also right click on the context menu to close it
+document.body.addEventListener("mousedown", (e) => e.button === 0 ? null : HideContextMenu());
 //function to bring up the indicators to allow the player to move
 const initiateMove = () => {
     moving = true;
@@ -134,7 +159,7 @@ const initiateMove = () => {
                 yCoordinate: currentPlayer.Position.yCoordinate + j
             };
             //makes sure that the space being worked on is a valid space
-            if ((currentSpace.xCoordinate > 0 && currentSpace.yCoordinate > 0) && (currentSpace.xCoordinate <= 38 && currentSpace.yCoordinate <= 18) && !(currentSpace.xCoordinate === currentPlayer.Position.xCoordinate && currentSpace.yCoordinate === currentPlayer.Position.yCoordinate)) {
+            if ((currentSpace.xCoordinate > 0 && currentSpace.yCoordinate > 0) && (currentSpace.xCoordinate <= xMax && currentSpace.yCoordinate <= yMax) && !(currentSpace.xCoordinate === currentPlayer.Position.xCoordinate && currentSpace.yCoordinate === currentPlayer.Position.yCoordinate)) {
                 //checks if the current space is empty by filtering the list of players down to only the players whose position matches the position of the current space
                 if (players.filter((p) => p.Position.xCoordinate === currentSpace.xCoordinate && p.Position.yCoordinate === currentSpace.yCoordinate).length === 0) {
                     //adds each space to the list of spaces that the player can move to

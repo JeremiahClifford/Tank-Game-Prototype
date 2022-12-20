@@ -1,7 +1,8 @@
 #viewport {
-    border: 1px solid black
+    border: 1px solid black;
 }
 
-#context-menu, #info-menu {
-    border: 1px solid black
+#info-menu {
+    padding: 5px;
+    border: 1px solid black;
 }

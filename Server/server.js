@@ -20,6 +20,11 @@ while (playerList[i] != undefined) {
     i++
 }
 
+//magic numbers
+//max spaces on the x and y of the board
+const xMax = 38
+const yMax = 18
+
 //settings to make data parsing and connecting work
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -74,9 +79,9 @@ app.post("/move", (request, response) => {
     if (
         movingPlayer.Points > 0 &&
         moveSubmitted.destination.xCoordinate > 0 &&
-        moveSubmitted.destination.xCoordinate < 38 &&
+        moveSubmitted.destination.xCoordinate < xMax &&
         moveSubmitted.destination.yCoordinate > 0 &&
-        moveSubmitted.destination.yCoordinate < 18 &&
+        moveSubmitted.destination.yCoordinate < yMax &&
         Math.abs(moveSubmitted.destination.xCoordinate - movingPlayer.Position.xCoordinate) <= 1 &&
         Math.abs(moveSubmitted.destination.yCoordinate - movingPlayer.Position.yCoordinate) <= 1 &&
         playerListArray.filter((p) => p.Position.xCoordinate === moveSubmitted.destination.xCoordinate && p.Position.yCoordinate === moveSubmitted.destination.yCoordinate).length === 0
