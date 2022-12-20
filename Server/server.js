@@ -25,6 +25,9 @@ while (playerList[i] != undefined) {
 const xMax = 36
 const yMax = 16
 
+//helper functions
+const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate))
+
 //settings to make data parsing and connecting work
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -105,6 +108,41 @@ app.post("/move", (request, response) => {
         responseFile.responseValue = false
     }
 
+    //sends a response to the client
+    response.json(responseFile)
+})
+
+//shoot function
+app.post("/shoot", (request, response) => {
+    //ingests the data
+    const shootSubmitted = request.body
+
+    //gets the player that is trying to make the move
+    const shootingPlayer = playerListArray.filter((p) => p.PlayerName === shootSubmitted.username)[0]
+
+    //gets the target player from the data
+    const targetPlayer = playerListArray.filter((p) => p.PlayerName === shootSubmitted.target)[0]
+
+    //checks if the shoot is valid
+    if (
+        shootingPlayer.Points > 0 &&
+        CheckRangeBetweenTanks(shootingPlayer, targetPlayer) <= 2
+    ) {
+
+        shootingPlayer.Points -= 1
+        targetPlayer.Health -= 1
+        //Handles if the target dies
+        if (targetPlayer.Health === 0) {
+            //TODO: remove the player if they die
+        }
+        //TODO: make the data write to the json file
+        //fs.writeFile("data/test.json", JSON.stringify(playerList))
+
+        responseFile.responseValue = true
+    } else {
+        responseFile.responseValue = false
+    }
+    
     //sends a response to the client
     response.json(responseFile)
 })

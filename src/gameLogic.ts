@@ -29,7 +29,7 @@ let movableSpaces: CoordinatePoint[] = []
 //bool to hold the status of if the player is currently trying to shoot
 let shooting: boolean = false;
 //list of other players that the player can shoot
-let shootablePlayers: CoordinatePoint[] = []
+let shootablePlayers: Tank[] = []
 
 //how far apart 2 tanks are for the purpose of checking if a tank is within
 //range to shoot
@@ -66,7 +66,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
     if (moving) {
         //checks if the player can move to the selected coordinate by filtering the list of movableSpaces to any that match the selected space
         if (movableSpaces.filter((c) => c.xCoordinate == gridPosition.xCoordinate && c.yCoordinate == gridPosition.yCoordinate).length == 1) {
-            //TODO: send a movement order to the server to move the player
+            //sends the move request to the server
             fetch(server + port + "/move", {
                 method: "POST",
                 headers: {
@@ -83,10 +83,6 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
             .then(() => HideContextMenu())
             .then(() => drawBoard())
             .catch(() => console.log("Server not responding"))
-            
-            console.log("Can move there \nMoving not yet implemented")
-        } else {
-            console.log("Can't move there \nMoving not yet implemented")
         }
         
         moving = false
@@ -94,7 +90,28 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
     //handles if the player is clicking on a space to try to shoot the person on it
     if (shooting) {
         //TODO: make shooting work
-        console.log("Shooting not yet implemented")
+        const filteredTargets: Tank[] = shootablePlayers.filter((p) => p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate === gridPosition.yCoordinate)
+        //checks if the selected space has a valid target in it
+        if (filteredTargets.length === 1) {
+             //sends the move request to the server
+             fetch(server + port + "/shoot", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": playerStorage.getItem("Username"),
+                    "target": filteredTargets[0].PlayerName
+                })
+            })
+            .then((response) => response.json())
+            .then((responseFile) => console.log(responseFile.responseValue))
+            .then(() => HideContextMenu())
+            .then(() => drawBoard())
+            .catch(() => console.log("Server not responding"))
+        }
+
         shooting = false
     }
 
@@ -242,10 +259,14 @@ const initiateShoot = (): void => {
 
     players.forEach((p) => {
         if (CheckRangeBetweenTanks(currentPlayer, p) <= 2 && p.PlayerName !== playerStorage.getItem("Username")) {
+            //draws a targeting indicator around the target
             context.strokeStyle = "red"
             context.lineWidth = 5
             context.strokeRect((p.Position.xCoordinate - 1) * boardSquareSize, (p.Position.yCoordinate - 1) * boardSquareSize, boardSquareSize, boardSquareSize)
             context.lineWidth = 1
+
+            //adds the player to the list of shootable players
+            shootablePlayers.push(p)
         }
     })
 }
