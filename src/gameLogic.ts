@@ -32,6 +32,8 @@ const CheckRangeBetweenTanks = (tankA: Tank, tankB: Tank): number => Math.max(Ma
 //Objects for the canvas
 const canvas: HTMLCanvasElement = document.getElementById('viewport') as HTMLCanvasElement
 const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D
+//grabs the context menu from the document
+const contextMenu: HTMLElement = document.getElementById("context-menu") as HTMLElement
 
 //function to detect which space the player licks on
 const GetMouseGridPosition = (canvas: HTMLCanvasElement, event: any): CoordinatePoint => {
@@ -75,9 +77,6 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
         moving = false
     }
 
-    //grabs the context menu from the document
-    const contextMenu: HTMLElement = document.getElementById("context-menu") as HTMLElement
-
     //handles the context menu text which tells the player which grid square they have selected
     contextMenu.innerHTML = `
         <h2 id="currently-selected-message">Currently Selected Grid Space: none</h2>
@@ -101,7 +100,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
         //if the name of the player in the space matches the logged in player
         if (filteredPlayers[0].PlayerName === playerStorage.getItem("Username")) {
             //fill in the context menu
-            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "You"
+            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + `${filteredPlayers[0].PlayerName} (You)`
             //gives the player the move button if they have enough action points
             if (filteredPlayers[0].Points > 0) {
                 //adds the button zone
@@ -135,10 +134,8 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
     drawBoard()
 }
 
-//adds an event listener to test the functionaily by outputing the position to the console
-canvas.addEventListener("mousedown", function(e) {
-    SelectGridSquare(GetMouseGridPosition(canvas, e))
-})
+//adds an event listener to select the grid square
+canvas.addEventListener("mousedown", (e) => e.button === 0 ? SelectGridSquare(GetMouseGridPosition(canvas, e)) : contextMenu.innerHTML = ``)
 
 //function to bring up the indicators to allow the player to move
 const initiateMove = (): void => {
