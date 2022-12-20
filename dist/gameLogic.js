@@ -135,7 +135,7 @@ const SelectGridSquare = (gridPosition, event) => {
                 }
             }
         }
-        else { //if it is not the logged in player it must be a different player
+        else if (playerStorage.getItem("Username") !== "spectator") { //if it is not the logged in player it must be a different player
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`;
             //gives the player the move button if they have enough action points
@@ -148,6 +148,11 @@ const SelectGridSquare = (gridPosition, event) => {
                 `;
                 const buttonZone = document.getElementById("button-zone");
                 buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint('${filteredPlayers[0].PlayerName}')">Send Action Point</button>`;
+            }
+        }
+        else { //spectators get more info when clicking on a player
+            if (filteredPlayers.length === 1) {
+                contextMenu.innerHTML += `<h3>Points: ${filteredPlayers[0].Points}</h3>`;
             }
         }
     }

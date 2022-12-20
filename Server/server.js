@@ -71,6 +71,14 @@ app.post("/login", (request, response) => {
     )
     response.json(responseFile)
 })
+//spectate function
+//user submits data, server valifdates, and sends back if they are valid or not
+app.post("/spectate", (request, response) => {
+    const loginSubmitted = request.body
+
+    responseFile.responseValue = loginSubmitted.gameKey == settings.GameKey
+    response.json(responseFile)
+})
 
 //move function
 //client submits move action, server validates if allowed, executes move

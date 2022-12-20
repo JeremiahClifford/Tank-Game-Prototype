@@ -150,7 +150,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
                     buttonZone.innerHTML += `<button id="shoot-button" onclick="initiateShoot()">Shoot</button>`
                 }
             }
-        } else { //if it is not the logged in player it must be a different player
+        } else if (playerStorage.getItem("Username") !== "spectator") { //if it is not the logged in player it must be a different player
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`
             //gives the player the move button if they have enough action points
@@ -163,6 +163,10 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
                 `
                 const buttonZone: HTMLElement = document.getElementById("button-zone") as HTMLElement
                 buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint('${filteredPlayers[0].PlayerName}')">Send Action Point</button>`
+            }
+        } else { //spectators get more info when clicking on a player
+            if (filteredPlayers.length === 1) {
+                contextMenu.innerHTML += `<h3>Points: ${filteredPlayers[0].Points}</h3>`
             }
         }
     }
