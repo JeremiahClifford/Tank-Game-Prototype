@@ -300,10 +300,23 @@ const drawBoard = () => {
                 context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
             }
             //fills in  the player info for the player
-            const availablePointsDefaultText = "Available Action Points: ";
-            if (p.PlayerName == playerStorage.getItem("Username")) {
-                const availablePointsDisplay = document.getElementById("points");
-                availablePointsDisplay.innerHTML = availablePointsDefaultText + p.Points;
+            if (p.PlayerName === playerStorage.getItem("Username")) {
+                const infoMenu = document.getElementById("info-menu");
+                infoMenu.innerHTML = ``;
+                if (p.Health > 0) { //if the player is alive and thus still in the game
+                    infoMenu.innerHTML += `<h2 id="points">Available Action Points: 0</h2>`;
+                    const availablePointsDisplay = document.getElementById("points");
+                    const availablePointsDefaultText = "Available Action Points: ";
+                    availablePointsDisplay.innerHTML = availablePointsDefaultText + p.Points;
+                }
+                else { //if the player is dead and in the jury
+                    infoMenu.innerHTML = `
+                            <h2>You are dead</h2>
+                            <div id="jury-box">
+                                <h3>Jury Box</h3>
+                            </div>
+                        `;
+                }
             }
         });
     })

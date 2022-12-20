@@ -5,4 +5,14 @@
 #info-menu {
     padding: 5px;
     border: 1px solid black;
+    background-color: white;
+}
+
+#jury-box {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+#viewport {
+    background-color: rgb(162, 212, 166);
 }

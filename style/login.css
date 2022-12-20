@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#login-form {
+    width: 15%;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid black;
+    padding: 10px;
+    padding-top: 0px;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#login-form * {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#login-form h1 {
+    width: 35%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#login-form button {
+    margin-top: 10px;
+}

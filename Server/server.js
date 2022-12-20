@@ -141,7 +141,11 @@ app.post("/shoot", (request, response) => {
         targetPlayer.Health -= 1
         //Handles if the target dies
         if (targetPlayer.Health === 0) {
-            //TODO: remove the player if they die
+            targetPlayer.Position = {
+                xCoordinate: 0,
+                yCoordinate: 0
+            }
+            targetPlayer.Points = 0
         }
         if (settings.SaveOnAction) {
             const data = JSON.stringify(playerList)
