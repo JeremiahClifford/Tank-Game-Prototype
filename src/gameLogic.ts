@@ -17,8 +17,8 @@ const boardSquareSize: number = 50
 //defines the size of the indicator marks
 const indicatorMarkSize: number = 30
 //defines the max number of spaces on the x and y directions
-const xMax: number = 38
-const yMax: number = 18
+const xMax: number = 36
+const yMax: number = 16
 //holds a list of the players
 let players: Tank[] = [];
 //variables to hold the status of the client

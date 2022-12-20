@@ -22,8 +22,8 @@ while (playerList[i] != undefined) {
 
 //magic numbers
 //max spaces on the x and y of the board
-const xMax = 38
-const yMax = 18
+const xMax = 36
+const yMax = 16
 
 //settings to make data parsing and connecting work
 app.use(bodyParser.json())
