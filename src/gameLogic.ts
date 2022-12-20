@@ -111,7 +111,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
             currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + filteredPlayers[0].PlayerName
             //gives the player the move button if they have enough action points
             if (players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0].Points > 0) {
-                buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint(${filteredPlayers[0].PlayerName})">Send Action Point</button>`
+                buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint('${filteredPlayers[0].PlayerName}')">Send Action Point</button>`
             }
         }
     }
@@ -158,8 +158,23 @@ const initiateMove = (): void => {
 
 const SendActionPoint =  (reciever: string): void => {
     //TODO: make it send an action point to the selected player
+    fetch(server + port + "/send", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "sender": playerStorage.getItem("Username"),
+            "reciever": reciever
+        })
+    })
+    .then((response) => response.json())
+    .then((responseFile) => console.log(responseFile.responseValue))
+    .then(() => drawBoard())
+    .catch(() => console.log("Server not responding"))
+
     console.log(`Sending 1 action point to ${reciever}`)
-    console.log(`Function not yet implemented`)
 }
 
 //function to draw the board onto the canvas

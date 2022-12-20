@@ -11,6 +11,8 @@ let playerList = require('./data/players.json')
 let responseFile = require('./data/responseFile.json')
 
 //array for of the list of players
+//this makes it a list of references so by changing data on one of them changes the data on both
+//this just makes it easier to work with and send
 let playerListArray = []
 let i = 1
 while (playerList[i] != undefined) {
@@ -37,6 +39,11 @@ app.get("/", (request, response) => {
 //responses for requests for data from the client
 app.get("/settings", (request, response) => {
     response.json(settings)
+})
+
+//sends the list of players to the client
+app.get("/players", (request, response) => {
+    response.json(playerList)
 })
 
 //login function
@@ -97,9 +104,33 @@ app.post("/move", bodyParser.json(), (request, response) => {
     response.json(responseFile)
 })
 
-//sends the list of players to the client
-app.get("/players", (request, response) => {
-    response.json(playerList)
+//send action points function
+//sends 1 action point between 1 player and another
+app.post("/send", bodyParser.json(), (request, response) => {
+
+    //ingests the data
+    const moveSubmitted = request.body
+
+    //gets the player that is trying to send the point
+    const sendingPlayer = playerListArray.filter((p) => p.PlayerName === moveSubmitted.sender)[0]
+    //gets the player that is going to recieve the point
+    const recievingPlayer = playerListArray.filter((p) => p.PlayerName === moveSubmitted.reciever)[0]
+
+    //make sure the sender has enough points
+    if (sendingPlayer.Points > 0) {
+        //remove the point from the sender
+        sendingPlayer.Points -= 1
+        //give it to the reciever
+        recievingPlayer.Points += 1
+        //set the response to true
+        responseFile.responseValue =true
+    } else {
+        //if the sender cant send, make the response false
+        responseFile.responseValue = false
+    }
+
+    //sends a response to the client
+    response.json(responseFile)
 })
 
 //game manager page to manage the game settings
