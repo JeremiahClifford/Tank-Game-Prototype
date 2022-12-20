@@ -218,5 +218,5 @@ setInterval(GiveActionPoints, settings.PointInterval * intervalConversion)
 
 //opens the server on the specified port
 app.listen(settings.Port, () => {
-    console.log("Listen on the port " + settings.Port + "...")
+    console.log(`Listen on the port ${settings.Port}`)
 })
