@@ -24,9 +24,13 @@ while (playerList[i] != undefined) {
 //max spaces on the x and y of the board
 const xMax = 36
 const yMax = 16
+//conversion ratio of milliseconds to units in the settings file
+//current conversion is to hours
+const intervalConversion = 3600000
 
 //helper functions
 const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate))
+const GiveActionPoints = () => playerListArray.forEach((p) => p.Points++)
 
 //settings to make data parsing and connecting work
 app.use(bodyParser.json())
@@ -201,6 +205,8 @@ const ManagerHTML = () => {
 app.get("/manager", (request, response) => {
     response.send(ManagerHTML())
 })
+
+setInterval(GiveActionPoints, settings.PointInterval * intervalConversion)
 
 //opens the server on the specified port
 app.listen(settings.Port, () => {
