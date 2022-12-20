@@ -1,0 +1,32 @@
+{
+    "1": {
+        "PlayerName": "Player 1",
+        "Password": "password",
+        "Position": {
+            "xCoordinate": 5,
+            "yCoordinate": 2
+        },
+        "Health": 3,
+        "Points": 0
+    },
+    "2": {
+        "PlayerName": "Player 2",
+        "Password": "password",
+        "Position": {
+            "xCoordinate": 5,
+            "yCoordinate": 4
+        },
+        "Health": 3,
+        "Points": 0
+    },
+    "3": {
+        "PlayerName": "Player 3",
+        "Password": "password",
+        "Position": {
+            "xCoordinate": 8,
+            "yCoordinate": 3
+        },
+        "Health": 3,
+        "Points": 0
+    }
+}
