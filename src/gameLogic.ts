@@ -46,10 +46,6 @@ const GetMouseGridPosition = (canvas: HTMLCanvasElement, event: any): Coordinate
 //function to select a grid square
 const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
 
-    //resets the button zone so that buttons dont stack up
-    const buttonZone: HTMLElement = document.getElementById("button-zone") as HTMLElement
-    buttonZone.innerHTML = ``
-
     //handles if the player is clicking on a space to try to move to it
     if (moving) {
         //checks if the player can move to the selected coordinate by filtering the list of movableSpaces to any that match the selected space
@@ -79,31 +75,42 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
         moving = false
     }
 
+    //grabs the context menu from the document
+    const contextMenu: HTMLElement = document.getElementById("context-menu") as HTMLElement
+
     //handles the context menu text which tells the player which grid square they have selected
-    const currentlySelectedDefaultString: string = "Currently Selected Grid Space: "
+    contextMenu.innerHTML = `
+        <h2 id="currently-selected-message">Currently Selected Grid Space: none</h2>
+    `
+    const currentlySelectedDefaultString: string = `Currently Selected Grid Space:`
     const currentlySelectedMessage: HTMLElement = document.getElementById('currently-selected-message') as HTMLElement
 
     //sets the context menu message to tell the player which grid square they have selected
-    currentlySelectedMessage.innerHTML = currentlySelectedDefaultString + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate
+    currentlySelectedMessage.innerHTML = `${currentlySelectedDefaultString} ${gridPosition.xCoordinate}, ${gridPosition.yCoordinate}`
 
-    //handles the context menu text which tells the player which player if any is in the selected square
-    const currentlyOccupyingDefaultText: string = "This space is occupied by: "
-    const currentlyOccupyingEmptyText: string = "This square in not occupied"
-    const currentlyOccupyingMessage: HTMLElement = document.getElementById('currently-occupied-message') as HTMLElement
-    //sets the message
-    currentlyOccupyingMessage.innerHTML = currentlyOccupyingEmptyText
-
-    //resets the button zone so there are not duplicated or stacked up buttons
-    buttonZone.innerHTML = ``
     //checks for players in the selected spaces by filtering the list of players
     let filteredPlayers = players.filter((p) => p.Position.xCoordinate === gridPosition.xCoordinate && p.Position.yCoordinate === gridPosition.yCoordinate)
     if (filteredPlayers.length === 1) {
+        //handles the context menu text which tells the player which player if any is in the selected square
+        contextMenu.innerHTML += `<h2 id="currently-occupied-message">This square in not occupied</h2>`
+        const currentlyOccupyingDefaultText: string = `This space is occupied by: `
+        const currentlyOccupyingMessage: HTMLElement = document.getElementById('currently-occupied-message') as HTMLElement
+        //sets the message
+        currentlyOccupyingMessage.innerHTML = `${currentlyOccupyingDefaultText} ${filteredPlayers[0].PlayerName}`
+
         //if the name of the player in the space matches the logged in player
-        if (filteredPlayers[0].PlayerName == playerStorage.getItem("Username")) {
+        if (filteredPlayers[0].PlayerName === playerStorage.getItem("Username")) {
             //fill in the context menu
-            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "you"
+            currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + "You"
             //gives the player the move button if they have enough action points
             if (filteredPlayers[0].Points > 0) {
+                //adds the button zone
+                contextMenu.innerHTML += `
+                    <div id="button-zone">
+
+                    </div>
+                `
+                const buttonZone: HTMLElement = document.getElementById("button-zone") as HTMLElement
                 buttonZone.innerHTML += `<button id="move-button" onclick="initiateMove()">Move</button>`
             }
         } else { //if it is not the logged in player it must be a different player
@@ -111,6 +118,13 @@ const SelectGridSquare = (gridPosition: CoordinatePoint): void => {
             currentlyOccupyingMessage.innerHTML = currentlyOccupyingDefaultText + filteredPlayers[0].PlayerName
             //gives the player the move button if they have enough action points
             if (players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0].Points > 0) {
+                //adds the button zone
+                contextMenu.innerHTML += `
+                    <div id="button-zone">
+
+                    </div>
+                `
+                const buttonZone: HTMLElement = document.getElementById("button-zone") as HTMLElement
                 buttonZone.innerHTML += `<button id="send-point-button" onclick="SendActionPoint('${filteredPlayers[0].PlayerName}')">Send Action Point</button>`
             }
         }
