@@ -278,8 +278,25 @@ const submitJuryVote = ():void => {
     const selectedButton:any = document.getElementsByName("player")
     let selectedPlayer: string = "none"
     selectedButton.forEach((r: any) => r.checked ? selectedPlayer = r.value : null)
+
     //TODO: submit the vote to the server so that it can be taken into account points are given out next
-    console.log(`You voted for ${selectedPlayer}\nVoting not implemented yet`)
+    fetch(server + port + "/vote", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "voter": playerStorage.getItem("Username"),
+            "voted": selectedPlayer
+        })
+    })
+    .then((response) => response.json())
+    .then((responseFile) => console.log(responseFile.responseValue))
+    .then(() => drawBoard())
+    .catch(() => console.log("Server not responding"))
+
+    console.log(`You voted for ${selectedPlayer}`)
 }
 
 //function to draw the board onto the canvas

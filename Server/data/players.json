@@ -7,7 +7,8 @@
             "yCoordinate": 2
         },
         "Health": 3,
-        "Points": 1
+        "Points": 1,
+        "Vote": "none"
     },
     "2": {
         "PlayerName": "Player 2",
@@ -17,7 +18,8 @@
             "yCoordinate": 4
         },
         "Health": 3,
-        "Points": 2
+        "Points": 2,
+        "Vote": "none"
     },
     "3": {
         "PlayerName": "Player 3",
@@ -27,6 +29,7 @@
             "yCoordinate": 3
         },
         "Health": 3,
-        "Points": 5
+        "Points": 5,
+        "Vote": "none"
     }
 }

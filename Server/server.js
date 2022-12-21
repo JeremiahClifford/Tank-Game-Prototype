@@ -30,7 +30,47 @@ const intervalConversion = 3600000
 
 //helper functions
 const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate))
-const GiveActionPoints = () => playerListArray.forEach((p) => p.Points++)
+const GiveActionPoints = () => {
+    //gives 1 action point to each player
+    playerListArray.forEach((p) => {
+        p.Points++
+    })
+    //creates a list to count the votes for each player
+    let votesFor = []
+    //adds an index in the votes for array for each player
+    playerListArray.forEach((p) => votesFor.push(0))
+    //counts the votes from each player
+    playerListArray.forEach((p) => {
+        //if the player is dead, count their vote
+        if (p.Health === 0) {
+            //checks which player they voted for and adds a count to them
+            for (let i = 0; i < playerListArray.length; i++) {
+                //checks which player they voted for and gives them 1 vote
+                if (playerListArray[i].PlayerName === p.Vote) {
+                    votesFor[i]++
+                }
+            }
+        }
+    })
+    //counts up the votes and awars the extra action point
+    let highestIndex = 0
+    for (let i = 0; i < votesFor.length; i++) {
+        votesFor[i] > votesFor[highestIndex] ? highestIndex = i : null
+    }
+    //gives the voted for player the award
+    //makes sure there is at least 1 vote
+    if (votesFor[highestIndex] > 0) {
+        //gives the voted for player their extra point
+        playerListArray[highestIndex].Points++
+    }
+    //saves the changes to the local files if enabled in the settings
+    if (settings.SaveOnAction) {
+        const data = JSON.stringify(playerList)
+        fs.writeFile("./Server/data/players.json", data, (err) => {
+            if (err) throw err
+        })
+    }
+}
 
 //settings to make data parsing and connecting work
 app.use(bodyParser.json())
@@ -195,7 +235,31 @@ app.post("/send", (request, response) => {
         //if the sender cant send, make the response false
         responseFile.responseValue = false
     }
+    if (settings.SaveOnAction) {
+        const data = JSON.stringify(playerList)
+        fs.writeFile("./Server/data/players.json", data, (err) => {
+            if (err) throw err
+        })
+    }
+    //sends a response to the client
+    response.json(responseFile)
+})
 
+//function for dead players to vote in the jury
+app.post("/vote", (request, response) => {
+    //ingests the data
+    const voteSubmitted = request.body
+
+    //gets the player that is voting
+    const votingPlayer = playerListArray.filter((p) => p.PlayerName === voteSubmitted.voter)[0]
+    //gets the player that they are voting for
+    const votedPlayer = voteSubmitted.voted
+
+    //sets the vote of the voter to the vote that they submitted
+    votingPlayer.Vote = votedPlayer
+
+    //sets the response to true
+    responseFile.responseValue = true
     //sends a response to the client
     response.json(responseFile)
 })
