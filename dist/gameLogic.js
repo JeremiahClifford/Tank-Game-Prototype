@@ -14,8 +14,8 @@ const boardSquareSize = 50;
 //defines the size of the indicator marks
 const indicatorMarkSize = 30;
 //defines the max number of spaces on the x and y directions
-const xMax = 36;
-const yMax = 16;
+const xMax = 37;
+const yMax = 18;
 //holds a list of the players
 let players = [];
 //variables to hold the status of the client
@@ -156,15 +156,13 @@ const SelectGridSquare = (gridPosition, event) => {
             }
         }
     }
-    //console log for debugging which shows the selected space and who is in it
-    console.log("Grid Square (" + gridPosition.xCoordinate + ", " + gridPosition.yCoordinate + ") Selected \nCurrently occupied by " + (filteredPlayers.length === 1 ? filteredPlayers[0].PlayerName : "no one"));
     ShowContextMenu(event);
     drawBoard();
 };
 //function to open the context menu
 const ShowContextMenu = (event) => {
     let mousePos = GetAbsoluteMousePosition(document.body, event);
-    contextMenu.style.position = 'absolute';
+    contextMenu.style.position = 'fixed';
     contextMenu.style.top = `${mousePos[1]}px`;
     contextMenu.style.left = `${mousePos[0]}px`;
     contextMenu.style.border = `2px solid black`;
@@ -249,6 +247,14 @@ const initiateShoot = () => {
         }
     });
 };
+//function to submit your jury vote
+const submitJuryVote = () => {
+    const selectedButton = document.getElementsByName("player");
+    let selectedPlayer = "none";
+    selectedButton.forEach((r) => r.checked ? selectedPlayer = r.value : null);
+    //TODO: submit the vote to the server so that it can be taken into account points are given out next
+    console.log(`You voted for ${selectedPlayer}\nVoting not implemented yet`);
+};
 //function to draw the board onto the canvas
 const drawBoard = () => {
     //draws a black background to be the lines between the spaces
@@ -319,7 +325,18 @@ const drawBoard = () => {
                             <h2>You are dead</h2>
                             <div id="jury-box">
                                 <h3>Jury Box</h3>
+                                <h4>Vote for the player that you want to give a bonus action point to</h4>
+                                <form id="extra-point-vote">
                             </div>
+                        `;
+                    const juryBox = document.getElementById("jury-box");
+                    players.forEach((p) => {
+                        p.Health > 0 ? juryBox.innerHTML += `<input type="radio" id="${p.PlayerName}" name="player" value="${p.PlayerName}">
+                                                                <label for="${p.PlayerName}">${p.PlayerName}</label><br>` : null;
+                    });
+                    juryBox.innerHTML += `
+                            <button type="button" id="vote-button" onclick="submitJuryVote()">Vote</button>
+                            </form>
                         `;
                 }
             }

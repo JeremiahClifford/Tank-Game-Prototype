@@ -22,8 +22,8 @@ while (playerList[i] != undefined) {
 
 //magic numbers
 //max spaces on the x and y of the board
-const xMax = 36
-const yMax = 16
+const xMax = 37
+const yMax = 18
 //conversion ratio of milliseconds to units in the settings file
 //current conversion is to hours
 const intervalConversion = 3600000
