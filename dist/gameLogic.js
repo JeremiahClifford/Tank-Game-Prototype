@@ -6,7 +6,6 @@ const playerStorage = window.sessionStorage;
 const server = "http://localhost:";
 //target port
 const port = playerStorage.getItem("Port");
-const refreshInterval = 5000; //seconds * 1000
 //section for handling the players
 //defines the size of a player on the screen to be used when calculating player position and board grid size
 const playerSize = 40;
@@ -28,6 +27,12 @@ let movableSpaces = [];
 let shooting = false;
 //list of other players that the player can shoot
 let shootablePlayers = [];
+//variables to hold various settings and helpers
+const refreshInterval = 5000; //seconds * 1000
+const playerImage = new Image();
+playerImage.src = './images/tank.png';
+playerImage.width = playerSize;
+playerImage.height = playerSize;
 //how far apart 2 tanks are for the purpose of checking if a tank is within
 //range to shoot
 const CheckRangeBetweenTanks = (tankA, tankB) => Math.max(Math.abs(tankA.Position.xCoordinate - tankB.Position.xCoordinate), Math.abs(tankA.Position.yCoordinate - tankB.Position.yCoordinate));
@@ -315,23 +320,24 @@ const drawBoard = () => {
             context.fillStyle = "black";
             //if it is drawing the player, set it to blue
             if (p.PlayerName === playerStorage.getItem("Username")) {
-                context.fillStyle = "blue";
+                context.strokeStyle = "blue";
+                context.strokeRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), playerSize, playerSize);
             }
-            context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), playerSize, playerSize);
+            context.drawImage(playerImage, ((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2));
             //draws a pip for each health point the player has
             //sets the color of the pips
             context.fillStyle = "Red";
             //draws the pip for 1 health
             if (p.Health >= 1) {
-                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 5), 10, 10);
             }
             //draws the pip for 2 health
             if (p.Health >= 2) {
-                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + ((playerSize / 2) - 5), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + ((playerSize / 2) - 5), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 5), 10, 10);
             }
             //draws the pip for 3 health
             if (p.Health >= 3) {
-                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 10), 10, 10);
+                context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize - playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate - 1) * boardSquareSize) + (playerSize - 5), 10, 10);
             }
             //fills in  the player info for the player
             if (p.PlayerName === playerStorage.getItem("Username")) {
