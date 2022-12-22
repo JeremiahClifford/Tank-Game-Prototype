@@ -20,7 +20,7 @@ const boardSquareSize: number = 50
 const indicatorMarkSize: number = 30
 //defines the max number of spaces on the x and y directions
 const xMax: number = 37
-const yMax: number = 18
+const yMax: number = 37
 //holds a list of the players
 let players: Tank[] = [];
 //variables to hold the status of the client
@@ -190,7 +190,7 @@ const ShowContextMenu = (event: any): void => {
     contextMenu.style.top = `${mousePos[1]}px`
     contextMenu.style.left = `${mousePos[0]}px`
     contextMenu.style.border = `2px solid black`
-    contextMenu.style.backgroundColor = `white`
+    contextMenu.style.backgroundColor = `rgb(203, 234, 245)`
     contextMenu.style.padding = `5px`
 }
 
@@ -338,6 +338,8 @@ const drawBoard = (): void => {
             }
        })
        .then(() => {
+            const infoMenu: HTMLElement = document.getElementById("info-menu") as HTMLElement
+            infoMenu.innerHTML = `<h1 id=""current-player-name>You are currently Spectating</h1>`
             //draws all of the players in the game
             //loops through the list of players and draws them at their position
             players.forEach((p) => {
@@ -363,12 +365,12 @@ const drawBoard = (): void => {
                 if (p.Health >= 3) {
                     context.fillRect(((p.Position.xCoordinate - 1) * boardSquareSize) + ((boardSquareSize-playerSize) / 2) + (playerSize - 10), ((p.Position.yCoordinate-1) * boardSquareSize) + (playerSize - 10), 10, 10)
                 }
-            
+
                 //fills in  the player info for the player
                 if (p.PlayerName === playerStorage.getItem("Username")) {
-                    const infoMenu: HTMLElement = document.getElementById("info-menu") as HTMLElement
-                    infoMenu.innerHTML = `<h1 id=""current-player-name>${p.PlayerName}</h1>`
+                    infoMenu.innerHTML = ``
                     if (p.Health > 0) { //if the player is alive and thus still in the game
+                        infoMenu.innerHTML += `<h1>${p.PlayerName}</h1>`
                         infoMenu.innerHTML += `<h2 id="points">Available Action Points: 0</h2>`
                         const availablePointsDisplay: HTMLElement = document.getElementById("points") as HTMLElement
                         const availablePointsDefaultText: string = "Available Action Points: "
@@ -394,6 +396,7 @@ const drawBoard = (): void => {
                     }
                 }
             })
+
        })
        .then(() => console.log("Board Drawn"))
        .catch(() => console.log("Error loading data from server"))

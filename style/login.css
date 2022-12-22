@@ -14,13 +14,15 @@ body {
     margin-left: auto;
 
     margin-top: 20px;
-    border: 1px solid black;
+    border: 3px solid black;
     padding: 10px;
     padding-top: 0px;
+    padding-bottom: 20px;
 
     min-width: 311px;
 
-    background-color: lightgray;
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
 
     display: flex;
     flex-flow: column nowrap;
@@ -40,7 +42,24 @@ body {
     margin-bottom: -10px;
 }
 
+#login-form input {
+    border: 2px solid black;
+    border-radius: 10px;
+    aspect-ratio: 15/1;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
 #login-form button {
     width: 60%;
-    margin-top: 10px;
+    aspect-ratio: 6/1;
+    margin-top: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+
+    background-color: cadetblue;
+}
+
+#login-form button:hover {
+    background-color: rgb(114, 183, 185);
 }

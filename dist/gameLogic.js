@@ -16,7 +16,7 @@ const boardSquareSize = 50;
 const indicatorMarkSize = 30;
 //defines the max number of spaces on the x and y directions
 const xMax = 37;
-const yMax = 18;
+const yMax = 37;
 //holds a list of the players
 let players = [];
 //variables to hold the status of the client
@@ -172,7 +172,7 @@ const ShowContextMenu = (event) => {
     contextMenu.style.top = `${mousePos[1]}px`;
     contextMenu.style.left = `${mousePos[0]}px`;
     contextMenu.style.border = `2px solid black`;
-    contextMenu.style.backgroundColor = `white`;
+    contextMenu.style.backgroundColor = `rgb(203, 234, 245)`;
     contextMenu.style.padding = `5px`;
 };
 //function to hide the context menu
@@ -306,6 +306,8 @@ const drawBoard = () => {
         }
     })
         .then(() => {
+        const infoMenu = document.getElementById("info-menu");
+        infoMenu.innerHTML = `<h1 id=""current-player-name>You are currently Spectating</h1>`;
         //draws all of the players in the game
         //loops through the list of players and draws them at their position
         players.forEach((p) => {
@@ -333,9 +335,9 @@ const drawBoard = () => {
             }
             //fills in  the player info for the player
             if (p.PlayerName === playerStorage.getItem("Username")) {
-                const infoMenu = document.getElementById("info-menu");
-                infoMenu.innerHTML = `<h1 id=""current-player-name>${p.PlayerName}</h1>`;
+                infoMenu.innerHTML = ``;
                 if (p.Health > 0) { //if the player is alive and thus still in the game
+                    infoMenu.innerHTML += `<h1>${p.PlayerName}</h1>`;
                     infoMenu.innerHTML += `<h2 id="points">Available Action Points: 0</h2>`;
                     const availablePointsDisplay = document.getElementById("points");
                     const availablePointsDefaultText = "Available Action Points: ";
