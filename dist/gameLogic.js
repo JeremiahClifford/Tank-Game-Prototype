@@ -6,6 +6,7 @@ const playerStorage = window.sessionStorage;
 const server = "http://localhost:";
 //target port
 const port = playerStorage.getItem("Port");
+const refreshInterval = 5000; //seconds * 1000
 //section for handling the players
 //defines the size of a player on the screen to be used when calculating player position and board grid size
 const playerSize = 40;
@@ -268,7 +269,7 @@ const submitJuryVote = () => {
         .then((responseFile) => console.log(responseFile.responseValue))
         .then(() => drawBoard())
         .catch(() => console.log("Server not responding"));
-    console.log(`You voted for ${selectedPlayer}\nVoting not implemented yet`);
+    console.log(`You voted for ${selectedPlayer}`);
 };
 //function to draw the board onto the canvas
 const drawBoard = () => {
@@ -357,7 +358,9 @@ const drawBoard = () => {
             }
         });
     })
+        .then(() => console.log("Board Drawn"))
         .catch(() => console.log("Error loading data from server"));
 };
 drawBoard();
+setInterval(drawBoard, refreshInterval);
 //# sourceMappingURL=gameLogic.js.map

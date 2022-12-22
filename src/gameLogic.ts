@@ -9,6 +9,8 @@ const server: string = "http://localhost:"
 //target port
 const port: string = playerStorage.getItem("Port") as string
 
+const refreshInterval: number = 5000 //seconds * 1000
+
 //section for handling the players
 //defines the size of a player on the screen to be used when calculating player position and board grid size
 const playerSize: number = 40
@@ -388,7 +390,9 @@ const drawBoard = (): void => {
                 }
             })
        })
+       .then(() => console.log("Board Drawn"))
        .catch(() => console.log("Error loading data from server"))
 }
 
 drawBoard()
+setInterval(drawBoard, refreshInterval)
