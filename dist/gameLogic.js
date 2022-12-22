@@ -117,10 +117,14 @@ const SelectGridSquare = (gridPosition, event) => {
         const currentlyOccupyingMessage = document.getElementById('currently-occupied-message');
         //sets the message
         currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`;
+        //context menu health section
+        contextMenu.innerHTML += `<h3 id="health-message">Health: -1</h3>`;
+        const healthMessage = document.getElementById("health-message");
         //if the name of the player in the space matches the logged in player
         if (filteredPlayers[0].PlayerName === playerStorage.getItem("Username")) {
             //fill in the context menu
             currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName} (You)`;
+            healthMessage.innerHTML = `Health: ${filteredPlayers[0].Health}`;
             //gives the player the move button if they have enough action points
             if (filteredPlayers[0].Points > 0) {
                 //adds the button zone
@@ -138,7 +142,8 @@ const SelectGridSquare = (gridPosition, event) => {
         }
         else if (playerStorage.getItem("Username") !== "spectator") { //if it is not the logged in player it must be a different player
             //fill in the context menu
-            currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName}`;
+            currentlyOccupyingMessage.innerHTML = `${filteredPlayers[0].PlayerName} (Not You)`;
+            healthMessage.innerHTML = `Health: ${filteredPlayers[0].Health}`;
             //gives the player the move button if they have enough action points
             if (players.filter((p) => p.PlayerName === playerStorage.getItem("Username"))[0].Points > 0) {
                 //adds the button zone
@@ -329,12 +334,12 @@ const drawBoard = () => {
             //fills in  the player info for the player
             if (p.PlayerName === playerStorage.getItem("Username")) {
                 const infoMenu = document.getElementById("info-menu");
-                infoMenu.innerHTML = ``;
+                infoMenu.innerHTML = `<h1 id=""current-player-name>${p.PlayerName}</h1>`;
                 if (p.Health > 0) { //if the player is alive and thus still in the game
                     infoMenu.innerHTML += `<h2 id="points">Available Action Points: 0</h2>`;
                     const availablePointsDisplay = document.getElementById("points");
                     const availablePointsDefaultText = "Available Action Points: ";
-                    availablePointsDisplay.innerHTML = availablePointsDefaultText + p.Points;
+                    availablePointsDisplay.innerHTML = `${availablePointsDefaultText} ${p.Points}`;
                 }
                 else { //if the player is dead and in the jury
                     infoMenu.innerHTML = `

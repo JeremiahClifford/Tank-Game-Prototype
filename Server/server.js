@@ -35,6 +35,8 @@ const GiveActionPoints = () => {
     playerListArray.forEach((p) => {
         p.Points++
     })
+
+    //vote counting
     //creates a list to count the votes for each player
     let votesFor = []
     //adds an index in the votes for array for each player
@@ -63,12 +65,29 @@ const GiveActionPoints = () => {
         //gives the voted for player their extra point
         playerListArray[highestIndex].Points++
     }
+
+    //winner checking
+    checkWinner()
+
     //saves the changes to the local files if enabled in the settings
     if (settings.SaveOnAction) {
         const data = JSON.stringify(playerList)
         fs.writeFile("./Server/data/players.json", data, (err) => {
             if (err) throw err
         })
+    }
+}
+const checkWinner = () => {
+    //checks if there is only 1 player left alive
+    let alivePlayers = 0
+    //checks every player to see if they are alive and counts them
+    playerListArray.forEach((p) => p.Health > 0 ? alivePlayers++ : null)
+    //ends the game
+    if (alivePlayers === 1) {
+        //TODO: end the game if only 1 player remains
+        let winner = ""
+        playerListArray.forEach((p) => p.Health > 0 ? winner = p.PlayerName : null)
+        console.log(`Game Over! ${winner} wins!`)
     }
 }
 
@@ -206,6 +225,8 @@ app.post("/shoot", (request, response) => {
     } else {
         responseFile.responseValue = false
     }
+
+    checkWinner()
     
     //sends a response to the client
     response.json(responseFile)
