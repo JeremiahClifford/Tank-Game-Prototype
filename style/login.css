@@ -38,6 +38,9 @@
     aspect-ratio: 15/1;
     margin-top: -15px;
     margin-bottom: 10px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #login-form button {
@@ -52,4 +55,26 @@
 
 #login-form button:hover {
     background-color: rgb(114, 183, 185);
+}
+
+#registration-box {
+    width: 15%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-top: 20px;
+    border: 3px solid black;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    min-width: 311px;
+
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+}
+
+#registration-box h4 {
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
