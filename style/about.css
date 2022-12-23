@@ -1,0 +1,35 @@
+#about {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 3px solid black;
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+
+    padding: 10px;
+    padding-left: 0px;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#about h1 {
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#about iframe {
+    width: 90%;
+    height: auto;
+    aspect-ratio: 16/9;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
