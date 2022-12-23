@@ -24,8 +24,16 @@
     margin-left: auto;
 }
 
-#login-form h1 {
+#login-form #login-title {
     width: 35%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-bottom: -10px;
+}
+
+#login-form #spectate-title {
+    width: 40%;
     margin-right: auto;
     margin-left: auto;
 
