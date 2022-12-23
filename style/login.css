@@ -1,13 +1,3 @@
-body {
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-#logo-img {
-    margin-right: auto;
-    margin-left: auto;
-}
-
 #login-form {
     width: 15%;
     margin-right: auto;

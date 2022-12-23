@@ -1,5 +1,12 @@
 body {
     background-color: lightblue;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#logo-img {
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #nav-bar {
