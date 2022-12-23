@@ -7,7 +7,8 @@ const ShowConnectFailed = (): void => {
         details are correct for the server you 
         are attempting to spectate. Also, make sure 
         that the server that you are attempting 
-        to spectate is currently running.
+        to spectate is currently running. You can
+        contact Jeremiah <a href="https://discord.gg/fKnTSgqDSF">Here</a>
     `
     connectMessageFailed.style.border = "3px solid red"
     connectMessageFailed.style.borderRadius = "10px"
@@ -55,10 +56,11 @@ const AttemptSpectate = (): void => {
                 playerStorage.setItem("Username", "spectator")
                 window.open('game.html', '_self')
             } else {
-                ShowConnectFailed()
-                console.log("Login Failed: Incorrect Login")
+                ShowLoginFailed()
                 return
             }
         })
-        .catch(() => console.log("Server not responding"))
+        .catch(() => {
+            ShowConnectFailed()
+        })
 }

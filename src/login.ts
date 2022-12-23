@@ -8,9 +8,9 @@ const ShowLoginFailed = (): void => {
         for the server you are attempting to join. 
         Also, make sure that the server that you are 
         attempting to join is currently running. 
-        Last, contact the person running the server 
-        that you are attempting to join to make that you 
-        registered for the game.   
+        Last, contact the Jeremiah to make that you 
+        registered for the game. You can contact
+        Jeremiah <a href="https://discord.gg/fKnTSgqDSF">Here</a>
     `
     loginFailedMessage.style.border = "3px solid red"
     loginFailedMessage.style.borderRadius = "10px"
@@ -68,9 +68,8 @@ const AttemptLogin = (): void => {
                 window.open('game.html', '_self')
             } else {
                 ShowLoginFailed()
-                console.log("Login Failed: Incorrect Login")
                 return
             }
         })
-        .catch(() => console.log("Server not responding"))
+        .catch(() => ShowLoginFailed())
 }
