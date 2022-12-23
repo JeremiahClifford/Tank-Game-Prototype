@@ -1,5 +1,29 @@
+const ShowLoginFailed = (): void => {
+    const loginFailedMessage: HTMLElement = document.getElementById("login-failed-message") as HTMLElement
+
+    loginFailedMessage.innerHTML = `
+        Unable to login?<br>
+        Make sure that your login details and 
+        the port and Game Key details are correct 
+        for the server you are attempting to join. 
+        Also, make sure that the server that you are 
+        attempting to join is currently running. 
+        Last, contact the person running the server 
+        that you are attempting to join to make that you 
+        registered for the game.   
+    `
+    loginFailedMessage.style.border = "3px solid red"
+    loginFailedMessage.style.borderRadius = "10px"
+    loginFailedMessage.style.width = "80%"
+    loginFailedMessage.style.marginLeft = "auto"
+    loginFailedMessage.style.marginRight = "auto"
+    loginFailedMessage.style.marginTop = "10px"
+    loginFailedMessage.style.padding = "5px"
+    loginFailedMessage.style.backgroundColor = "rgb(255, 161, 161)"
+}
+
 //checks the player's login credentials before letting them enter the game
-const AttemptLogin = () => {
+const AttemptLogin = (): void => {
 
     //gets the local storage to store login information
     const playerStorage: Storage = window.sessionStorage
@@ -43,6 +67,7 @@ const AttemptLogin = () => {
                 playerStorage.setItem("Port", portInputted)
                 window.open('game.html', '_self')
             } else {
+                ShowLoginFailed()
                 console.log("Login Failed: Incorrect Login")
                 return
             }

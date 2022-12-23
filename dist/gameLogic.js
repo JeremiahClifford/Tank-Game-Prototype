@@ -163,6 +163,7 @@ const SelectGridSquare = (gridPosition, event) => {
         }
         else { //spectators get more info when clicking on a player
             if (filteredPlayers.length === 1) {
+                healthMessage.innerHTML = `Health: ${filteredPlayers[0].Health}`;
                 contextMenu.innerHTML += `<h3>Points: ${filteredPlayers[0].Points}</h3>`;
             }
         }

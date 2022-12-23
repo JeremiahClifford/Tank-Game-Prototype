@@ -1,4 +1,25 @@
-const AttemptSpectate = () => {
+const ShowConnectFailed = (): void => {
+    const connectMessageFailed: HTMLElement = document.getElementById("connect-failed-message") as HTMLElement
+
+    connectMessageFailed.innerHTML = `
+        Unable to connect to the Server?<br>
+        Make sure that the port and Game Key 
+        details are correct for the server you 
+        are attempting to spectate. Also, make sure 
+        that the server that you are attempting 
+        to spectate is currently running.
+    `
+    connectMessageFailed.style.border = "3px solid red"
+    connectMessageFailed.style.borderRadius = "10px"
+    connectMessageFailed.style.width = "80%"
+    connectMessageFailed.style.marginLeft = "auto"
+    connectMessageFailed.style.marginRight = "auto"
+    connectMessageFailed.style.marginTop = "10px"
+    connectMessageFailed.style.padding = "5px"
+    connectMessageFailed.style.backgroundColor = "rgb(255, 161, 161)"
+}
+
+const AttemptSpectate = (): void => {
 
     //gets the local storage to store login information
     const playerStorage: Storage = window.sessionStorage
@@ -34,6 +55,7 @@ const AttemptSpectate = () => {
                 playerStorage.setItem("Username", "spectator")
                 window.open('game.html', '_self')
             } else {
+                ShowConnectFailed()
                 console.log("Login Failed: Incorrect Login")
                 return
             }
