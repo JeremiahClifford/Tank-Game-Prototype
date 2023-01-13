@@ -23,7 +23,8 @@ const AttemptSpectate = () => {
     //gets the local storage to store login information
     const playerStorage = window.sessionStorage;
     //target server
-    const server = "http://localhost:";
+    //const server: string = "http://localhost:"
+    const server = "https://192.168.45.23:";
     //gets the inputted values
     //gameKey
     const gameKeyInputField = document.getElementById('gamekeyinput');
