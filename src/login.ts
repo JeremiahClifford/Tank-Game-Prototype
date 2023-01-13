@@ -29,7 +29,8 @@ const AttemptLogin = (): void => {
     const playerStorage: Storage = window.sessionStorage
     
     //target server
-    const server: string = "http://localhost:"
+    //const server: string = "http://localhost:"
+    const server: string = "https://192.168.45.23"
 
     //gets the inputted values
     //username
