@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>Tank Tactics Login</title>
+        <link rel="stylesheet" href="style/global.css">
+        <link rel="stylesheet" href="style/login.css">
+    </head>
+    <body>
+        <img src="./images/logo.png" alt="logo" width="500" height="100" id="logo-img">
+        <div id="nav-bar">
+            <a href="index.html"><h2>Login</h2></a>
+            <a href="spectate.html"><h2>Spectate</h2></a>
+            <a href="rules.html"><h2>Rules</h2></a>
+            <a href="about.html"><h2>About</h2></a>
+        </div>
+        <div id="login-form">
+            <div id="login-failed-message">
+
+            </div>
+            <h1 id="login-title">Login:</h1>
+            <h2>Username:</h2>
+            <input type="text" id="usernameinput">
+            <h2>Password:</h2>
+            <input type="text" id="passwordinput">
+            <h2>Server Address:</h2>
+            <input type="text" id="serverinput">
+            <h2>Game Port:</h2>
+            <input type="text" id="portinput">
+            <h2>Game Key:</h2>
+            <input type="text" id="gamekeyinput">
+            <br>
+            <br>
+            <button type="button" onclick="AttemptLogin()">Join Game</button>
+        </div>
+        <div id="registration-box">
+            <h4>Not registered yet? Contact Jeremiah <a href="https://discord.gg/fKnTSgqDSF">Here</a>
+            or at f0reCaste#2956 on Discord</h4>
+        </div>
+    </body>
+    <script src="dist/login.js"></script>
+</html>

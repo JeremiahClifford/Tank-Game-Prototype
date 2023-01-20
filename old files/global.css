@@ -1,0 +1,40 @@
+body {
+    background-color: lightblue;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#logo-img {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#nav-bar {
+    margin-right: auto;
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#nav-bar * {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#nav-bar a {
+    text-decoration: none;
+}
+
+#nav-bar a:link {
+    color: black;
+}
+#nav-bar a:visited {
+    color: black;
+}
+#nav-bar a:hover {
+    color: rgb(124, 124, 124);
+}
+#nav-bar a:active {
+    color: rgb(124, 124, 124);
+}
