@@ -22,19 +22,19 @@ const ShowConnectFailed = () => {
 const AttemptSpectate = () => {
     //gets the local storage to store login information
     const playerStorage = window.sessionStorage;
-    //target server
-    //const server: string = "http://localhost:"
-    const server = "https://192.168.45.23:";
     //gets the inputted values
-    //gameKey
-    const gameKeyInputField = document.getElementById('gamekeyinput');
-    const gameKeyInputted = gameKeyInputField.value;
+    //server
+    const serverInputField = document.getElementById('serverinput');
+    const serverInputted = serverInputField.value;
     //port
     const portInputField = document.getElementById('portinput');
     const portInputted = portInputField.value;
+    //gameKey
+    const gameKeyInputField = document.getElementById('gamekeyinput');
+    const gameKeyInputted = gameKeyInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch(server + portInputted + "/spectate", {
+    fetch(`${serverInputted}:${portInputted}/spectate`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -48,8 +48,9 @@ const AttemptSpectate = () => {
         .then((responseFile) => loginSucceeded = responseFile.responseValue)
         .then(() => {
         if (loginSucceeded) {
-            playerStorage.setItem("Port", portInputted);
             playerStorage.setItem("Username", "spectator");
+            playerStorage.setItem("Server", serverInputted);
+            playerStorage.setItem("Port", portInputted);
             window.open('game.html', '_self');
         }
         else {

@@ -24,22 +24,20 @@ const AttemptSpectate = (): void => {
 
     //gets the local storage to store login information
     const playerStorage: Storage = window.sessionStorage
-    
-    //target server
-    //const server: string = "http://localhost:"
-    const server: string = "https://192.168.45.23:"
 
     //gets the inputted values
-    //gameKey
-    const gameKeyInputField: HTMLInputElement = document.getElementById('gamekeyinput') as HTMLInputElement
-    const gameKeyInputted: string = gameKeyInputField.value as string
+    //server
+    const serverInputField: HTMLInputElement = document.getElementById('serverinput') as HTMLInputElement
+    const serverInputted: string = serverInputField.value as string
     //port
     const portInputField: HTMLInputElement = document.getElementById('portinput') as HTMLInputElement
     const portInputted: string = portInputField.value as string
-
+    //gameKey
+    const gameKeyInputField: HTMLInputElement = document.getElementById('gamekeyinput') as HTMLInputElement
+    const gameKeyInputted: string = gameKeyInputField.value as string
     //get the response to the login check
     let loginSucceeded: boolean = false
-    fetch(server + portInputted + "/spectate", {
+    fetch(`${serverInputted}:${portInputted}/spectate`, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -53,8 +51,9 @@ const AttemptSpectate = (): void => {
         .then((responseFile) => loginSucceeded = responseFile.responseValue)
         .then(() => {
             if (loginSucceeded) {
-                playerStorage.setItem("Port", portInputted)
                 playerStorage.setItem("Username", "spectator")
+                playerStorage.setItem("Server", serverInputted)
+                playerStorage.setItem("Port", portInputted)
                 window.open('game.html', '_self')
             } else {
                 ShowLoginFailed()

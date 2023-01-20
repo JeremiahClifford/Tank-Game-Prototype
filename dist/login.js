@@ -25,9 +25,6 @@ const ShowLoginFailed = () => {
 const AttemptLogin = () => {
     //gets the local storage to store login information
     const playerStorage = window.sessionStorage;
-    //target server
-    //const server: string = "http://localhost:"
-    const server = "https://192.168.45.23:";
     //gets the inputted values
     //username
     const usernameInputField = document.getElementById('usernameinput');
@@ -35,15 +32,18 @@ const AttemptLogin = () => {
     //password
     const passwordInputField = document.getElementById('passwordinput');
     const passwordInputted = passwordInputField.value;
-    //gameKey
-    const gameKeyInputField = document.getElementById('gamekeyinput');
-    const gameKeyInputted = gameKeyInputField.value;
+    //server
+    const serverInputField = document.getElementById('serverinput');
+    const serverInputted = serverInputField.value;
     //port
     const portInputField = document.getElementById('portinput');
     const portInputted = portInputField.value;
+    //gameKey
+    const gameKeyInputField = document.getElementById('gamekeyinput');
+    const gameKeyInputted = gameKeyInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch(server + portInputted + "/login", {
+    fetch(`${serverInputted}:${portInputted}/login`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -60,6 +60,7 @@ const AttemptLogin = () => {
         .then(() => {
         if (loginSucceeded) {
             playerStorage.setItem("Username", usernameInputted);
+            playerStorage.setItem("Server", serverInputted);
             playerStorage.setItem("Port", portInputted);
             window.open('game.html', '_self');
         }
