@@ -5,7 +5,6 @@ import { Tank } from "./tank"
 const playerStorage: Storage = window.sessionStorage
 
 //target server
-//const server: string = "http://localhost:"
 const server: string = playerStorage.getItem("Server") as string
 //target port
 const port: string = playerStorage.getItem("Port") as string

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //gets the local storage to store login information
 const playerStorage = window.sessionStorage;
 //target server
-//const server: string = "http://localhost:"
 const server = playerStorage.getItem("Server");
 //target port
 const port = playerStorage.getItem("Port");
