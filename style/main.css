@@ -1,0 +1,227 @@
+/*visibilty of the various pages*/
+#pages {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#login-page {
+    visibility: visible;
+    display: inline;
+}
+
+#spectate-page {
+    visibility: hidden;
+    display: none;
+}
+
+#rules-page {
+    visibility: hidden;
+    display: none;
+}
+
+#about-page {
+    visibility: hidden;
+    display: none;
+}
+
+/*Logo*/
+#logo-img {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*nav bar*/
+#new-nav-bar {
+    margin-right: auto;
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#new-nav-bar * {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#new-nav-bar button {
+    background-color: rgba(0, 0, 0, 0);
+    border: 0px;
+}
+
+#new-nav-bar button h1 {
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#new-nav-bar button:hover h1 {
+    color: rgb(124, 124, 124);
+}
+
+#new-nav-bar button:active h1 {
+    color: rgb(124, 124, 124);
+}
+
+/*login and spectate*/
+.login-form {
+    width: 15%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-top: 20px;
+    border: 3px solid black;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+
+    min-width: 311px;
+
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.login-form * {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.login-form #login-title {
+    width: 35%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-bottom: -10px;
+}
+
+.login-form #spectate-title {
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-bottom: -10px;
+}
+
+.login-form input {
+    border: 2px solid black;
+    border-radius: 10px;
+    aspect-ratio: 15/1;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.login-form button {
+    width: 60%;
+    aspect-ratio: 6/1;
+    margin-top: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+
+    background-color: cadetblue;
+}
+
+.login-form button:hover {
+    background-color: rgb(114, 183, 185);
+}
+
+.registration-box {
+    width: 15%;
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-top: 20px;
+    border: 3px solid black;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    min-width: 311px;
+
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+}
+
+.registration-box h4 {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+/*rules*/
+#rules {
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 3px solid black;
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+
+    padding: 10px;
+    padding-left: 0px;
+}
+
+#rules h1 {
+    width: 179px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#rules #game-rules {
+    width: 161px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#rules #controls {
+    width: 90px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+li {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-right: 12px;
+}
+
+/*about*/
+#about {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 3px solid black;
+    background-color: rgb(203, 234, 245);
+    border-radius: 20px;
+
+    padding: 10px;
+    padding-left: 0px;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#about h1 {
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#about iframe {
+    width: 90%;
+    height: auto;
+    aspect-ratio: 16/9;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}

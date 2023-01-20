@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>Tank Tactics Login</title>
+        <link rel="stylesheet" href="style/global.css">
+        <link rel="stylesheet" href="style/main.css">
+    </head>
+    <body>
+        <img src="./images/logo.png" alt="logo" width="500" height="100" id="logo-img">
+        <div id="new-nav-bar">
+            <button type="button" onclick="showLoginPage()"><h1>Login</h1></button>
+            <button type="button" onclick="showSpectatePage()"><h1>Spectate</h1></button>
+            <button type="button" onclick="showRulesPage()"><h1>Rules</h1></button>
+            <button type="button" onclick="showAboutPage()"><h1>About</h1></button>
+        </div>
+        <div id="pages">
+            <div id="login-page">
+                <div class="login-form">
+                    <div id="login-failed-message">
+        
+                    </div>
+                    <h1 id="login-title">Login:</h1>
+                    <h2>Username:</h2>
+                    <input type="text" id="usernameinput">
+                    <h2>Password:</h2>
+                    <input type="text" id="passwordinput">
+                    <h2>Server Address:</h2>
+                    <input type="text" id="serverinput">
+                    <h2>Game Port:</h2>
+                    <input type="text" id="portinput">
+                    <h2>Game Key:</h2>
+                    <input type="text" id="gamekeyinput">
+                    <br>
+                    <br>
+                    <button type="button" onclick="AttemptLogin()">Join Game</button>
+                </div>
+                <div class="registration-box">
+                    <h4>Not registered yet? Contact Jeremiah <a href="https://discord.gg/fKnTSgqDSF">Here</a>
+                    or at f0reCaste#2956 on Discord</h4>
+                </div>
+            </div>
+            <div id="spectate-page">
+                <div class="login-form">
+                    <div id="connect-failed-message">
+        
+                    </div>
+                    <h1 id="spectate-title">Spectate:</h1>
+                    <h2>Server Address:</h2>
+                    <input type="text" id="serverInput">
+                    <h2>Game Port:</h2>
+                    <input type="text" id="portinput">
+                    <h2>Game Key:</h2>
+                    <input type="text" id="gamekeyinput">
+                    <br>
+                    <br>
+                    <button type="button" onclick="AttemptSpectate()">Join Game</button>
+                </div>
+                <div class="registration-box">
+                    <h4>Not registered yet? Contact Jeremiah <a href="https://discord.gg/fKnTSgqDSF">Here</a>
+                    or at f0reCaste#2956 on Discord</h4>
+                </div>
+            </div>
+            <div id="rules-page">
+                <div id="rules">
+                    <h1>The Rules</h1>
+                    <p id="rules-list">
+                        <h2 id="game-rules">Game Rules</h2>
+                        <ul id="rules-list">
+                            <li><h3>Every player is a tank on a 37 x 37 board</h3></li>
+                            <li><h3>Each player starts with 3 (three) health at a random position on the board</h3></li>
+                            <li><h3>Each player receives 1 (one) action point</h3></li>
+                            <li><h3>Players can use an action point to move 1 (one) space</h3></li>
+                            <li><h3>Players can use an action point to shoot any other player that is within range</h3></li>
+                            <li><h3>Players can send an action point to any other player</h3></li>
+                            <li><h3>Shooting a player reduces their health by 1 (one)</h3></li>
+                            <li><h3>Any player that reaches 0 (zero) health dies</h3></li>
+                            <li><h3>Dead players in the jury</h3></li>
+                            <li><h3>Jury members can vote on 1 (one) player to recieve an extra action point</h3></li>
+                            <li><h3>After every interval, when action points are given out, the living player that received the most<br>jury votes gets 1 extra action point</h3></li>
+                            <li><h3>The last player left alive is the winner</h3></li>
+                        </ul>
+                        <h2 id="controls">Controls</h2>
+                        <ul id="controls-list">
+                            <li><h3>Click anywhere on the board to select that grid square, you will see a context menu of information</h3></li>
+                            <li><h3>If the square has a player in it, you will see information about that player and buttons with actions<br>that you can take in regards to that player</h3></li>
+                            <li><h3>If the square that you select is where you are, you will see different buttons with different actions</h3></li>
+                            <li><h3>Press any of these buttons to take those actions</h3></li>
+                            <li><h3>If you do not see any buttons, it is because you do not have any action points and thus can not take any<br>actions</h3></li>
+                            <li><h3>When you click the move button, you will see a bunch of orange squares in the spaces around you.<br>Those are the spaces that you can move to. Clicking on any of those squares will move you to that square</h3></li>
+                            <li><h3>When you click the shoot button, you will see that some of the other players have a red square<br>around them. These are the players that you can shoot. Clicking on any of them will shoot them</h3></li>
+                            <li><h3>Right click anywhere on the board to close the context menu</h3></li>
+                            <li><h3>If you are dead you will see a list of the alive players that you can select and a vote button. Selecting<br>a player from the list and pressing the vote button submits a vote for that player to get the extra<br>action point. Submitting a second vote overwrites your previous votes</h3></li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div id="about-page">
+                <div id="about">
+                    <h1>About</h1>
+                    <h3>
+                        I stole the idea for this game from this video by 
+                        <a href="https://www.youtube.com/@PeopleMakeGames">People Make games</a> 
+                        on Youtube.
+                    </h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/aOYbR-Q_4Hs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <h3>
+                        I built the site using HTML and CSS, the client with Typescript, 
+                        and the server with Javascript and Express.JS The art for the tank, which is also 
+                        the favicon, was generated with <a href="https://openai.com/dall-e-2/">Dall-e 2</a> 
+                        from Open AI
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="dist/navBar.js"></script>
+    <script src="dist/login.js"></script>
+    <script src="dist/spectate.js"></script>
+</html>
