@@ -131,7 +131,7 @@ app.post("/login", (request, response) => {
     response.json(responseFile)
 })
 //spectate function
-//user submits data, server valifdates, and sends back if they are valid or not
+//user submits data, server validates, and sends back if they are valid or not
 app.post("/spectate", (request, response) => {
     const loginSubmitted = request.body
 
@@ -141,7 +141,7 @@ app.post("/spectate", (request, response) => {
 
 //move function
 //client submits move action, server validates if allowed, executes move
-//client should refresh and reaquire the data from the server and thus nothing should need to be sent back
+//client should refresh and reacquire the data from the server and thus nothing should need to be sent back
 app.post("/move", (request, response) => {
     //ingests the data
     const moveSubmitted = request.body
