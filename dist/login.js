@@ -43,7 +43,7 @@ const AttemptLogin = () => {
     const gameKeyInputted = gameKeyInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch(`${serverInputted}:${portInputted}/login`, {
+    fetch(`http://${serverInputted}:${portInputted}/login`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',

@@ -73,7 +73,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
         //checks if the player can move to the selected coordinate by filtering the list of movableSpaces to any that match the selected space
         if (movableSpaces.filter((c) => c.xCoordinate == gridPosition.xCoordinate && c.yCoordinate == gridPosition.yCoordinate).length == 1) {
             //sends the move request to the server
-            fetch(`${server}:${port}/move`, {
+            fetch(`http://${server}:${port}/move`, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -100,7 +100,7 @@ const SelectGridSquare = (gridPosition: CoordinatePoint, event: any): void => {
         //checks if the selected space has a valid target in it
         if (filteredTargets.length === 1) {
              //sends the move request to the server
-             fetch(`${server}:${port}/shoot`, {
+             fetch(`http://${server}:${port}/shoot`, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -245,7 +245,7 @@ const initiateMove = (): void => {
 //function to send an action point to another player
 const SendActionPoint =  (reciever: string): void => {
     //TODO: make it send an action point to the selected player
-    fetch(`${server}:${port}/send`, {
+    fetch(`http://${server}:${port}/send`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -292,7 +292,7 @@ const submitJuryVote = ():void => {
     selectedButton.forEach((r: any) => r.checked ? selectedPlayer = r.value : null)
 
     //TODO: submit the vote to the server so that it can be taken into account points are given out next
-    fetch(`${server}:${port}/vote`, {
+    fetch(`http://${server}:${port}/vote`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -331,7 +331,7 @@ const drawBoard = (): void => {
     //resets the list of players to be empty
     players = []
     //get the list of players from the server and draws the board when the site loads
-    fetch(`${server}:${port}/players`, {method: "GET"})
+    fetch(`http://${server}:${port}/players`, {method: "GET"})
        .then(res => res.json())
        //.then((players) => playerListImport = JSON.parse(players))
        .then((playersImport) => playerListImport = playersImport)

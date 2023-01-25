@@ -34,7 +34,7 @@ const AttemptSpectate = () => {
     const gameKeyInputted = gameKeyInputField.value;
     //get the response to the login check
     let loginSucceeded = false;
-    fetch(`${serverInputted}:${portInputted}/spectate`, {
+    fetch(`http://${serverInputted}:${portInputted}/spectate`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',

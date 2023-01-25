@@ -47,7 +47,7 @@ const AttemptLogin = (): void => {
 
     //get the response to the login check
     let loginSucceeded: boolean = false
-    fetch(`${serverInputted}:${portInputted}/login`, {
+    fetch(`http://${serverInputted}:${portInputted}/login`, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
